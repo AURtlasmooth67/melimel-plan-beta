@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>คู่มือนักพัฒนา: ผ่าโครงสร้างและเจาะลึกซอร์สโค้ด เอนจินสร้างรูปภาพตารางงาน 1248×1248 HD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  @page {
+    size: A4;
+    margin: 20mm 16mm 20mm 16mm;
+    @bottom-right {
+      content: counter(page);
+      font-family: 'Sarabun', sans-serif;
+      font-size: 9pt;
+      color: #64748b;
+    }
+    @bottom-left {
+      content: "MELiMEL FRUITY♡ Planner Image Generator — Code Architecture Handbook";
+      font-family: 'Sarabun', sans-serif;
+      font-size: 8pt;
+      color: #94a3b8;
+    }
+  }
+
+  @page :first {
+    margin: 0;
+    @bottom-right { content: normal; }
+    @bottom-left { content: normal; }
+  }
+
+  * { box-sizing: border-box; }
+  
+  body {
+    font-family: 'Sarabun', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 10pt;
+    line-height: 1.6;
+    color: #1e293b;
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+  }
+
+  .cover {
+    width: 100vw;
+    height: 100vh;
+    padding: 70px 50px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    page-break-after: always;
+  }
+
+  .cover-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(225, 29, 72, 0.25);
+    border: 1px solid rgba(225, 29, 72, 0.6);
+    color: #fca5a5;
+    border-radius: 999px;
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .cover-title {
+    font-size: 30pt;
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 25px 0 12px 0;
+    background: linear-gradient(90deg, #ffffff, #fbcfe8, #fed7aa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .cover-subtitle {
+    font-size: 13.5pt;
+    color: #cbd5e1;
+    font-weight: 300;
+    line-height: 1.5;
+    margin-bottom: 25px;
+  }
+
+  .cover-meta {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    font-size: 9.5pt;
+    color: #94a3b8;
+  }
+
+  .cover-meta b {
+    color: #f1f5f9;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Sarabun', sans-serif;
+    color: #0f172a;
+    page-break-after: avoid;
+  }
+
+  h1 {
+    font-size: 17pt;
+    font-weight: 700;
+    border-bottom: 2px solid #4f46e5;
+    padding-bottom: 6px;
+    margin-top: 26pt;
+    margin-bottom: 12pt;
+    color: #1e1b4b;
+  }
+
+  h2 {
+    font-size: 13.5pt;
+    font-weight: 700;
+    color: #4338ca;
+    margin-top: 18pt;
+    margin-bottom: 8pt;
+  }
+
+  h3 {
+    font-size: 11.5pt;
+    font-weight: 600;
+    color: #0f172a;
+    margin-top: 13pt;
+    margin-bottom: 6pt;
+  }
+
+  p {
+    margin: 0 0 9pt 0;
+    text-align: justify;
+  }
+
+  .page-break {
+    page-break-before: always;
+  }
+
+  .no-break {
+    page-break-inside: avoid;
+  }
+
+  /* Code & Syntax */
+  code {
+    font-family: 'Fira Code', Consolas, monospace;
+    font-size: 8.5pt;
+    background: #f1f5f9;
+    padding: 2px 5px;
+    border-radius: 4px;
+    color: #e11d48;
+    border: 1px solid #e2e8f0;
+  }
+
+  pre {
+    font-family: 'Fira Code', Consolas, monospace;
+    font-size: 8pt;
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 10px 12px;
+    border-radius: 6px;
+    overflow-x: auto;
+    line-height: 1.45;
+    page-break-inside: avoid;
+    margin: 9pt 0;
+  }
+
+  pre code {
+    background: transparent;
+    border: none;
+    color: inherit;
+    padding: 0;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5pt;
+    margin: 10pt 0;
+    page-break-inside: auto;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  th, td {
+    padding: 5px 7px;
+    text-align: left;
+    border: 1px solid #cbd5e1;
+    vertical-align: top;
+  }
+
+  th {
+    background: #f8fafc;
+    color: #1e293b;
+    font-weight: 700;
+    border-bottom: 2px solid #94a3b8;
+  }
+
+  tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+
+  td.line-num {
+    font-family: 'Fira Code', monospace;
+    font-weight: 600;
+    color: #4f46e5;
+    text-align: center;
+    white-space: nowrap;
+    width: 50px;
+  }
+
+  td.code-col {
+    font-family: 'Fira Code', monospace;
+    white-space: pre-wrap;
+    word-break: break-all;
+    width: 42%;
+  }
+
+  /* Callout Boxes */
+  .callout {
+    border-left: 4px solid #4f46e5;
+    background: #eef2ff;
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    margin: 10pt 0;
+    font-size: 9.5pt;
+    page-break-inside: avoid;
+  }
+
+  .callout.tip {
+    border-left-color: #10b981;
+    background: #ecfdf5;
+  }
+
+  .callout.warn {
+    border-left-color: #f59e0b;
+    background: #fffbeb;
+  }
+
+  .callout.danger {
+    border-left-color: #ef4444;
+    background: #fef2f2;
+  }
+
+  .callout b {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* Diagram Box */
+  .diagram-container {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 12pt 0;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+
+  .diagram-container svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Table of Contents */
+  .toc {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 20pt;
+  }
+
+  .toc-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    border-bottom: 1px dotted #cbd5e1;
+    font-size: 9.5pt;
+  }
+
+  .toc-item.level-1 {
+    font-weight: 700;
+    color: #1e1b4b;
+    padding-top: 6px;
+  }
+
+  .toc-item.level-2 {
+    padding-left: 16px;
+    color: #475569;
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <div>
+    <span class="cover-badge">Developer Technical Architecture Handbook</span>
+    <h1 class="cover-title">MELiMEL FRUITY♡<br>Planner Image Generator</h1>
+    <div class="cover-subtitle">
+      คู่มือนักพัฒนาและผ่าโครงสร้างซอร์สโค้ดฉบับสมบูรณ์<br>
+      เจาะลึกสถาปัตยกรรมเอนจินกราฟิก 1248×1248 HD Canvas ละเอียดทุกฟังก์ชันทุกบรรทัด
+    </div>
+  </div>
+
+  <div>
+    <div class="cover-meta">
+      <div>
+        <p><b>ผู้ประพันธ์และเจ้าของโค้ด:</b> Senior Full-Stack Engineer (Code Owner)</p>
+        <p><b>โปรเจกต์:</b> MELiMEL FRUITY♡ Social Media Workflow Engine</p>
+        <p><b>เทคโนโลยี:</b> Vanilla HTML5, CSS3, JavaScript (ES2022), Canvas 2D</p>
+      </div>
+      <div>
+        <p><b>เวอร์ชัน:</b> v2.0.0 (Production Release)</p>
+        <p><b>ความละเอียดเอาต์พุต:</b> 1248 × 1248 Pixel (1:1 Social HD)</p>
+        <p><b>วันที่จัดทำ:</b> ตุลาคม 2026</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PREFACE & TABLE OF CONTENTS -->
+<div class="page-break"></div>
+<h1>สารบัญ (Table of Contents)</h1>
+
+<div class="toc">
+  <div class="toc-item level-1"><span>บทที่ 1: ภาพรวมโปรเจกต์ (Project Overview & Tech Stack)</span><span>3</span></div>
+  <div class="toc-item level-2"><span>1.1 วัตถุประสงค์ ปัญหาที่แก้ไข และผู้ใช้งานหลัก</span><span></span></div>
+  <div class="toc-item level-2"><span>1.2 เหตุผลการเลือกเทคโนโลยี (Zero Dependency Rationale)</span><span></span></div>
+  <div class="toc-item level-2"><span>1.3 โครงสร้างไฟล์และสถาปัตยกรรม Input → Process → Output</span><span></span></div>
+  
+  <div class="toc-item level-1"><span>บทที่ 2: แผนผังการทำงานและสถาปัตยกรรมระบบ (Flow & Architecture)</span><span>4</span></div>
+  <div class="toc-item level-2"><span>2.1 สถาปัตยกรรม 3 มุมมอง (Gallery, Fill, Editor)</span><span></span></div>
+  <div class="toc-item level-2"><span>2.2 ลำดับการบูตระบบและวงจรการเรนเดอร์ (Execution Sequence)</span><span></span></div>
+  
+  <div class="toc-item level-1"><span>บทที่ 3: ผ่าซอร์สโค้ดและเจาะลึกรายบรรทัด (File-by-File Code Walkthrough)</span><span>5</span></div>
+  <div class="toc-item level-2"><span>3.1 ไฟล์ index.html: โครงสร้าง DOM หน้าจอ 3 วิว และส่วนควบคุม</span><span>5</span></div>
+  <div class="toc-item level-2"><span>3.2 ไฟล์ style.css: ระบบดีไซน์โทเคน, Dark Mode และ Viewport Layout</span><span>9</span></div>
+  <div class="toc-item level-2"><span>3.3 ไฟล์ app.js (ส่วนที่ 1): Storage, 2D Geometry & เอนจินตัดคำไทย</span><span>12</span></div>
+  <div class="toc-item level-2"><span>3.4 ไฟล์ app.js (ส่วนที่ 2): Navigation Stack, Sync & เอนจินส่งออกภาพ</span><span>17</span></div>
+  <div class="toc-item level-2"><span>3.5 ไฟล์ app.js (ส่วนที่ 3): Template Studio, 50-Step Undo & Computer Vision</span><span>22</span></div>
+  
+  <div class="toc-item level-1"><span>บทที่ 4: ตัวแปรสำคัญ สถานะ วงจรข้อมูล และการดักจับข้อผิดพลาด</span><span>28</span></div>
+  <div class="toc-item level-1"><span>บทที่ 5: เหตุผลเชิงการออกแบบและการตัดสินใจเชิงเทคนิค (Design Rationale)</span><span>30</span></div>
+  <div class="toc-item level-1"><span>บทที่ 6: กรณีศึกษาและการติดตามการทำงานจริง (Execution Traces)</span><span>31</span></div>
+  <div class="toc-item level-1"><span>บทที่ 7: สรุปจุดแข็ง ข้อควรระวัง คำแนะนำการพัฒนาต่อ และวิธีทดสอบ</span><span>33</span></div>
+</div>
+
+<div class="callout tip">
+  <b>คำชี้แจงจากเจ้าของโค้ด:</b>
+  เอกสารเล่มนี้เขียนขึ้นด้วยมุมมองบุคคลที่หนึ่ง ("ผม") ในฐานะนักพัฒนาอาวุโสผู้สร้างระบบนี้ตั้งแต่บรรทัดแรก เพื่อถ่ายทอดองค์ความรู้ ความตั้งใจในการออกแบบ ข้อจำกัดทางวิศวกรรมซอฟต์แวร์ และรายละเอียดของโค้ดทุกบรรทัดให้กับทีมพัฒนาชุดใหม่ได้อย่างสมบูรณ์แบบที่สุด
+</div>
+
+<!-- CHAPTER 1 -->
+<div class="page-break"></div>
+<h1>บทที่ 1: ภาพรวมโปรเจกต์ (Project Overview & Tech Stack)</h1>
+
+<h2>1.1 วัตถุประสงค์ ปัญหาที่แก้ไข และใครคือผู้ใช้</h2>
+<p>
+ในฐานะผู้พัฒนา ผมสร้างระบบ <b>"Planner Image Generator" (1248×1248 Canvas Engine)</b> ขึ้นมาเพื่อแก้ปัญหาคอขวดในกระบวนการทำงานของวงไอดอล <b>MELiMEL FRUITY♡</b> และทีมงานผู้ดูแลโซเชียลมีเดีย 
+เดิมทีในทุกวันอาทิตย์หรือต้นสัปดาห์ ฝ่ายกราฟิกหรือสมาชิกในวงต้องเปิดโปรแกรมกราฟิกขนาดใหญ่อย่าง Photoshop หรือ Canva เพื่อคัดลอกตารางซ้อม นัดหมายไลฟ์สตรีม และตารางงานแสดง แล้วจัดวางข้อความทีละวัน ซึ่งกินเวลาหลายชั่วโมงและมักเกิดความผิดพลาดเรื่องการตัดบรรทัดคำภาษาไทยไม่สวยงาม หรือสัดส่วนภาพผิดเพี้ยนเมื่อนำไปทวีตบน X (Twitter) หรือโพสต์บน Instagram
+</p>
+<p>
+<b>ระบบนี้แก้ปัญหาโดย:</b>
+</p>
+<ul>
+  <li><b>ระบบจัดรูปแบบภาพอัตโนมัติบนผืนผ้าใบมาตรฐาน 1248×1248 พิกเซล (1:1 HD):</b> เป็นสเกลทองคำที่ผมคำนวณไว้แล้วว่า คมชัดเป็นพิเศษบนมือถือ ไม่ถูกโซเชียลมีเดียครอปตัดขอบหรือบีบอัดจนแตก</li>
+  <li><b>เอนจินตัดคำภาษาไทยอัจฉริยะ (Native Thai Word-Wrapping Engine):</b> ตัดบรรทัดได้อย่างเป็นธรรมชาติ ไม่ตัดกลางสระหรือพยัญชนะ</li>
+  <li><b>One-Click Member Outline Sync:</b> คลิกเลือกชื่อสมาชิก เช่น "น้องโมเน่ต์" ข้อมูลตารางงานซ้อม เพลงที่พร้อมขึ้นโชว์ และวันเวลาจะถูกดูดมาแมปลงในตาราง 7 วันทันทีใน 1 วินาที</li>
+  <li><b>Template Studio & Computer Vision Box Detection:</b> ทีมงานสามารถโยนรูปตารางเปล่าลายใหม่ ๆ เข้ามา ระบบจะสแกนพิกเซลและล็อกกล่อง 7 วันให้อัตโนมัติ พร้อมใช้งานทันที</li>
+</ul>
+
+<h2>1.2 ภาษา Framework และ Library ที่ใช้ และเหตุผลที่เลือก</h2>
+<p>
+หลายคนอาจแปลกใจที่เห็นระบบกราฟิกที่ซับซ้อนขนาดนี้ถูกเขียนขึ้นด้วย <b>Pure Vanilla Web Technologies (No Framework, Zero Dependencies)</b> เหตุผลที่ผมตัดสินใจเช่นนี้คือ:
+</p>
+<ol>
+  <li><b>Vanilla JavaScript (ES2022) + HTML5 Canvas API:</b> ไม่ใช้ React, Vue หรือไลบรารีกราฟิกอย่าง Fabric.js / Konva.js เพราะไลบรารีเหล่านั้นมีน้ำหนักหลายร้อยกิโลไบต์ มี Virtual DOM Overhead และหน่วงเครื่องมากเมื่อต้องเรนเดอร์ภาพ 1248×1248 บนมือถือของทีมงาน การใช้ HTML5 Canvas ดิบทำให้ผมควบคุม Render Loop และ Memory ได้อย่างสมบูรณ์แบบ</li>
+  <li><b>Intl.Segmenter API:</b> ใช้เอนจินตัดคำระดับ Native V8 ของเบราว์เซอร์สำหรับภาษาไทย แทนการโหลดโมเดลหรือพจนานุกรมภายนอก ทำให้เว็บโหลดเร็วทันที (0 KB Dictionary Payload)</li>
+  <li><b>Native Pointer Events API:</b> ใช้ระบบ Pointer Events ตัวเดียวครอบคลุมทั้งเมาส์, ปากกาสไตลัส และนิ้วสัมผัสบนมือถือ/แท็บเล็ต พร้อมฟังก์ชัน <code>setPointerCapture</code> ป้องกันเหตุการณ์นิ้วหลุดขอบกระดาน</li>
+  <li><b>Web Share API:</b> แชร์รูปภาพที่สร้างเสร็จเข้าสู่แอป Twitter / Line / Facebook ได้ทันทีโดยไม่ต้องเซฟรูปลงเครื่องก่อน</li>
+</ol>
+
+<h2>1.3 โครงสร้างไฟล์และโฟลเดอร์</h2>
+<p>
+ผมจัดโครงสร้างโค้ดให้เรียบง่าย มีเพียง 3 ไฟล์หลักที่แยกความรับผิดชอบอย่างชัดเจน (Separation of Concerns):
+</p>
+<pre><code>x:\TESTWEB\planner-image-tool\
+├── index.html   (โครงสร้าง DOM ของหน้าจอทั้ง 3 วิว, Viewport แคนวาส, โมดอล และปุ่มควบคุม)
+├── style.css    (ระบบ Design Tokens, ธีมสี Dark/Light, Responsive Layout และ Viewport Scroll/Pan)
+└── app.js       (เอนจินหลักทั้งหมด: Storage, Math, Typography, Rendering, CV, Navigation & Events)</code></pre>
+
+<h2>1.4 ลำดับการไหลของข้อมูลหลัก (Input → Process → Output)</h2>
+<ul>
+  <li><b>Input:</b> ข้อมูลข้อความ 7 วัน, ข้อมูลสมาชิกวง, สไตล์แม่แบบ, รูปภาพประกอบ และรูปพื้นหลังที่ผู้ใช้อัปโหลด</li>
+  <li><b>Process:</b>
+    <ol>
+      <li><b>Coordinate Matrix Projection:</b> ปรับสเกลพิกัดนิ้ว/เมาส์จากหน้าจอจริงเข้าสู่พิกัด 1248×1248</li>
+      <li><b>Thai Segmenter Text Wrapping:</b> ตัดคำไทยและคำนวณความสูงของแต่ละบรรทัดให้พอดีกับความกว้างกล่อง</li>
+      <li><b>Composite Render Pipeline:</b> เรนเดอร์พื้นหลัง, รูปภาพพร้อมหน้ากากมุมมนและการหมุน, การ์ดตาราง 7 วัน, แบดจ์วันที่ และข้อความ</li>
+    </ol>
+  </li>
+  <li><b>Output:</b> ไฟล์ภาพ PNG ความคมชัดสูงพิเศษ (Lossless 1248×1248) หรือ JPEG 93% พร้อมดาวน์โหลดหรือส่งผ่าน Web Share</li>
+</ul>
+
+<!-- CHAPTER 2 -->
+<div class="page-break"></div>
+<h1>บทที่ 2: แผนผังการทำงานและสถาปัตยกรรมระบบ (Flow & Architecture)</h1>
+
+<h2>2.1 สถาปัตยกรรม 3 มุมมอง (View Architecture)</h2>
+<p>
+ผมแบ่งหน้าจอการทำงานของแอปออกเป็น 3 วิวหลัก และควบคุมการสลับหน้าด้วย Linear Navigation Stack:
+</p>
+
+<div class="diagram-container">
+  <svg viewBox="0 0 750 340" width="750" height="340" xmlns="http://www.w3.org/2000/svg">
+    <rect x="20" y="30" width="210" height="260" rx="8" fill="#e0e7ff" stroke="#4338ca" stroke-width="2"/>
+    <text x="125" y="60" font-family="Sarabun" font-size="13" font-weight="bold" fill="#1e1b4b" text-anchor="middle">View 1: Gallery</text>
+    <text x="125" y="80" font-family="Sarabun" font-size="9.5" fill="#475569" text-anchor="middle">(คลังเลือกแม่แบบ)</text>
+    <rect x="40" y="105" width="170" height="32" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="125" y="125" font-family="Sarabun" font-size="9" fill="#1e293b" text-anchor="middle">Built-in Templates (5 ลาย)</text>
+    <rect x="40" y="150" width="170" height="32" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="125" y="170" font-family="Sarabun" font-size="9" fill="#1e293b" text-anchor="middle">Custom Templates (สร้างเอง)</text>
+    <rect x="40" y="195" width="170" height="32" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="125" y="215" font-family="Sarabun" font-size="9" fill="#1e293b" text-anchor="middle">ปุ่ม + สร้างใหม่ / อัปโหลด</text>
+
+    <line x1="230" y1="120" x2="265" y2="120" stroke="#4f46e5" stroke-width="2"/>
+    <polygon points="265,116 273,120 265,124" fill="#4f46e5"/>
+    <text x="250" y="112" font-family="Sarabun" font-size="8.5" fill="#4338ca" text-anchor="middle">เลือก</text>
+
+    <rect x="275" y="30" width="210" height="260" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="380" y="60" font-family="Sarabun" font-size="13" font-weight="bold" fill="#78350f" text-anchor="middle">View 2: Fill View</text>
+    <text x="380" y="80" font-family="Sarabun" font-size="9.5" fill="#78350f" text-anchor="middle">(หน้ากรอกข้อมูลตารางงาน)</text>
+    <rect x="295" y="105" width="170" height="30" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="380" y="124" font-family="Sarabun" font-size="9" fill="#1e293b" text-anchor="middle">ซิงค์สมาชิกวง / กรอก 7 วัน</text>
+    <rect x="295" y="145" width="170" height="30" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="380" y="164" font-family="Sarabun" font-size="9" fill="#1e293b" text-anchor="middle">ใส่รูปสมาชิก / ซูมหมุนรูป</text>
+    <rect x="295" y="185" width="170" height="30" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="380" y="204" font-family="Sarabun" font-size="9" fill="#1e293b" text-anchor="middle">พรีวิว Canvas สด (1248px)</text>
+    <rect x="295" y="225" width="170" height="30" rx="4" fill="#f59e0b" stroke="#b45309"/>
+    <text x="380" y="244" font-family="Sarabun" font-size="9" font-weight="bold" fill="#ffffff" text-anchor="middle">ส่งออกภาพ PNG / JPG / Share</text>
+
+    <line x1="485" y1="160" x2="520" y2="160" stroke="#4f46e5" stroke-width="2"/>
+    <polygon points="520,156 528,160 520,164" fill="#4f46e5"/>
+    <text x="506" y="152" font-family="Sarabun" font-size="8.5" fill="#4338ca" text-anchor="middle">แก้ไข</text>
+
+    <rect x="530" y="30" width="200" height="260" rx="8" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+    <text x="630" y="60" font-family="Sarabun" font-size="13" font-weight="bold" fill="#064e3b" text-anchor="middle">View 3: Studio Editor</text>
+    <text x="630" y="80" font-family="Sarabun" font-size="9.5" fill="#064e3b" text-anchor="middle">(สตูดิโอปรับแต่งแม่แบบ)</text>
+    <rect x="545" y="105" width="170" height="30" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="630" y="124" font-family="Sarabun" font-size="9" fill="#1e293b" text-anchor="middle">Auto-Detect ตรวจจับกล่อง</text>
+    <rect x="545" y="145" width="170" height="30" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="630" y="164" font-family="Sarabun" font-size="9" fill="#1e293b" text-anchor="middle">ลากย้าย / ขยาย / Nudge</text>
+    <rect x="545" y="185" width="170" height="30" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="630" y="204" font-family="Sarabun" font-size="9" fill="#1e293b" text-anchor="middle">Undo / Redo 50 ขั้น</text>
+    <rect x="545" y="225" width="170" height="30" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="630" y="244" font-family="Sarabun" font-size="9" fill="#1e293b" text-anchor="middle">Bulk Edit ปรับฟอนต์ยกชุด</text>
+  </svg>
+</div>
+
+<h2>2.2 ลำดับการบูตระบบและการทำงานตอนรันจริง (Lifecycle Execution)</h2>
+<ol>
+  <li>เมื่อหน้าเว็บโหลดเสร็จ เหตุการณ์ <code>DOMContentLoaded</code> จะเรียก <code>initStandalone()</code></li>
+  <li>กู้คืนธีมสี Dark/Light จาก <code>localStorage.getItem('melimel_theme')</code></li>
+  <li>เรียก <code>renderImageEditorPage()</code>:
+    <ul>
+      <li>ตรวจสอบแฟล็ก <code>pieInitialized</code> เพื่อผูก Event Listener ทั้งหมดเพียงครั้งเดียว</li>
+      <li>เรียก <code>pieLoadStorage()</code> อ่านแม่แบบ Custom จาก LocalStorage</li>
+      <li>สร้าง Built-in Templates 5 ลายเริ่มต้น (<code>pieBuiltins</code>)</li>
+      <li>เรียก <code>pieBuildGallery()</code> สร้างการ์ดแสดงผลบนหน้าจอ</li>
+      <li>เรียก <code>pieNavGo('gallery')</code> ตั้งค่าจุดเริ่มต้นลงใน Linear Navigation Stack</li>
+    </ul>
+  </li>
+</ol>
+
+<!-- CHAPTER 3 -->
+<div class="page-break"></div>
+<h1>บทที่ 3: ผ่าซอร์สโค้ดและเจาะลึกรายบรรทัด (File-by-File Breakdown)</h1>
+
+<h2>3.1 ไฟล์ index.html: โครงสร้าง DOM หน้าจอ 3 วิว</h2>
+<p>
+ในไฟล์ <code>index.html</code> ผมเขียนโครงสร้าง HTML5 Semantic แบ่งออกเป็น 9 ก้อนสำคัญ โดยไม่มีการพึ่งพา Element หรือ Framework ภายนอก:
+</p>
+
+<h3>ก้อนที่ 1: Header และแถบ Navigation บาร์หลัก (บรรทัด 1–45)</h3>
+<table>
+  <thead>
+    <tr>
+      <th class="line-num">บรรทัด</th>
+      <th class="code-col">โค้ด</th>
+      <th>หน้าที่และเหตุผลการออกแบบ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="line-num">1-14</td>
+      <td class="code-col">&lt;!DOCTYPE html&gt;&lt;html lang="th"&gt;&lt;head&gt;...&lt;/head&gt;</td>
+      <td>กำหนด Doctype และดึงฟอนต์ Sarabun, Kanit, Mitr, Prompt ผ่าน Google Fonts เพื่อให้การเรนเดอร์ข้อความบน Canvas สวยงามและมีให้เลือกหลากหลาย</td>
+    </tr>
+    <tr>
+      <td class="line-num">15-32</td>
+      <td class="code-col">&lt;nav class="pie-nav-bar"&gt;&lt;div class="pie-nav-left"&gt;...&lt;/div&gt;&lt;/nav&gt;</td>
+      <td>แถบ Navigation หลักที่มีปุ่ม Back/Forward สำหรับควบคุม Stack ประวัติหน้าจอ (<code>#pieNavBackBtn</code>, <code>#pieNavFwdBtn</code>) และปุ่มลัด Home</td>
+    </tr>
+    <tr>
+      <td class="line-num">33-45</td>
+      <td class="code-col">&lt;div class="pie-nav-right"&gt;...&lt;/div&gt;</td>
+      <td>ปุ่มสลับแท็บด่วน 3 แท็บ (คลังแม่แบบ, ตารางงาน, สตูดิโอออกแบบ) พร้อมปุ่มสลับธีม Dark Mode</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>ก้อนที่ 2: View 1 — Gallery คลังแม่แบบ (บรรทัด 46–85)</h3>
+<table>
+  <thead>
+    <tr>
+      <th class="line-num">บรรทัด</th>
+      <th class="code-col">โค้ด</th>
+      <th>หน้าที่และเหตุผลการออกแบบ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="line-num">46-60</td>
+      <td class="code-col">&lt;section id="pie-v-gallery" class="pie-view"&gt;...&lt;/section&gt;</td>
+      <td>พื้นที่แสดงผลคลังแม่แบบ มีหัวข้อแนะนำและปุ่มลัด "+ สร้างแม่แบบใหม่จากรูปพื้นหลัง"</td>
+    </tr>
+    <tr>
+      <td class="line-num">61-85</td>
+      <td class="code-col">&lt;div class="pie-grid" id="pie-cards"&gt;&lt;/div&gt;</td>
+      <td>กริดแบบ Responsive สำหรับวางการ์ดแม่แบบทั้งหมด โดย <code>app.js</code> จะฉีด HTML การ์ดพรีวิวขนาดเล็กเข้ามาแสดงผลที่นี่</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>ก้อนที่ 3: View 2 — หน้ากรอกข้อมูลและพรีวิวภาพตารางงาน (บรรทัด 86–200)</h3>
+<p>
+หน้านี้เป็นหน้าหลักที่ทีมงานใช้ทำงานทุกวัน ผมออกแบบโครงสร้างเป็นแบบ Two-Column Layout (Sidebar ควบคุมด้านซ้าย และ Viewport แคนวาสด้านขวา):
+</p>
+<table>
+  <thead>
+    <tr>
+      <th class="line-num">บรรทัด</th>
+      <th class="code-col">โค้ด</th>
+      <th>หน้าที่และเหตุผลการออกแบบ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="line-num">86-115</td>
+      <td class="code-col">&lt;div class="pie-sidebar"&gt;...&lt;div id="pieMemberChips"&gt;&lt;/div&gt;...&lt;/div&gt;</td>
+      <td>กล่องเลือกสัปดาห์ (สัปดาห์ก่อนหน้า/ถัดไป) และคอนเทนเนอร์ชิปสมาชิกวงสำหรับ One-Click Sync</td>
+    </tr>
+    <tr>
+      <td class="line-num">116-150</td>
+      <td class="code-col">&lt;div id="pieReadySongsBox"&gt;...&lt;div id="pie-days-inputs"&gt;...&lt;/div&gt;</td>
+      <td>กล่องเลือกเพลงพร้อมซ้อม และ Textarea กรอกข้อความแยก 7 วัน (จันทร์–อาทิตย์) <code>#pie-b0</code> ถึง <code>#pie-b6</code></td>
+    </tr>
+    <tr>
+      <td class="line-num">151-180</td>
+      <td class="code-col">&lt;div id="pie-photo-box"&gt;...&lt;input type="file" id="pie-photo-file"&gt;...&lt;/div&gt;</td>
+      <td>แผงควบคุมรูปภาพสมาชิก: ปุ่มเลือกไฟล์, ตัวเลื่อนหมุนภาพ (-180° ถึง +180°), ตัวคูณสเกล และปุ่มลัดหมุนทีละ 90°</td>
+    </tr>
+    <tr>
+      <td class="line-num">181-200</td>
+      <td class="code-col">&lt;div class="pie-stage"&gt;&lt;canvas id="pie-pcv" width="1248" height="1248"&gt;&lt;/canvas&gt;&lt;/div&gt;</td>
+      <td>ผืนผ้าใบพรีวิวหลัก <code>#pie-pcv</code> ขนาดจริง 1248×1248 พิกเซล พร้อมปุ่ม Export ภาพ PNG / JPEG และปุ่มแชร์</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>ก้อนที่ 4: View 3 — สตูดิโอออกแบบแม่แบบ (Template Studio) (บรรทัด 201–329)</h3>
+<table>
+  <thead>
+    <tr>
+      <th class="line-num">บรรทัด</th>
+      <th class="code-col">โค้ด</th>
+      <th>หน้าที่และเหตุผลการออกแบบ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="line-num">201-230</td>
+      <td class="code-col">&lt;div class="pie-editor-toolbar"&gt;...&lt;/div&gt;</td>
+      <td>แถบเครื่องมือสตูดิโอด้านบน: ปุ่ม Undo/Redo, ปุ่มสลับเครื่องมือ Select / Hand Pan, ปุ่มซูมเข้า/ออก/Fit</td>
+    </tr>
+    <tr>
+      <td class="line-num">231-270</td>
+      <td class="code-col">&lt;div id="pieEcvWrap" class="pie-canvas-wrap"&gt;&lt;canvas id="pie-ecv" width="1248" height="1248"&gt;&lt;/canvas&gt;&lt;/div&gt;</td>
+      <td>คอนเทนเนอร์ Viewport สำหรับ Pan & Zoom แคนวาสสตูดิโอ <code>#pie-ecv</code> รองรับ Gesture เลื่อนกระดาน</td>
+    </tr>
+    <tr>
+      <td class="line-num">271-329</td>
+      <td class="code-col">&lt;div class="pie-editor-sidebar"&gt;...&lt;div id="pie-props"&gt;&lt;/div&gt;...&lt;/div&gt;</td>
+      <td>Sidebar ขวาสำหรับวางกล่องเครื่องมือ: ปุ่ม Auto-Detect ตรวจจับกล่องอัตโนมัติ, ปุ่มเพิ่มช่อง 7 วันยกชุด และคอนเทนเนอร์ <code>#pie-props</code> สำหรับฟอร์มปรับแต่งคุณสมบัติฟิลด์</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 3.2: CSS -->
+<div class="page-break"></div>
+<h2>3.2 ไฟล์ style.css: ระบบดีไซน์โทเคน, Dark Mode และ Viewport Layout</h2>
+<p>
+ในไฟล์ <code>style.css</code> ผมออกแบบโดยยึดหลัก <b>Pure CSS Design System</b> ไม่ใช้ Tailwind หรือ Bootstrap ทำให้ไฟล์มีขนาดเพียง 10KB แต่ยืดหยุ่นสูง:
+</p>
+
+<h3>1. ระบบดีไซน์โทเคน (Design Tokens & Color Palette)</h3>
+<pre><code>:root {
+  --primary: #4f46e5;       /* สีน้ำเงินครามหลัก */
+  --primary-hover: #4338ca;
+  --bg: #f8fafc;            /* พื้นหลังโหมดสว่าง */
+  --bg2: #ffffff;           /* พื้นหลังการ์ด */
+  --bg3: #f1f5f9;           /* พื้นหลังอินพุต */
+  --text: #0f172a;          /* สีตัวหนังสือเข้ม */
+  --text2: #334155;
+  --text3: #64748b;         /* สีคำอธิบายรอง */
+  --border: #e2e8f0;        /* สีเส้นแบ่ง */
+  --radius: 8px;            --radius-sm: 6px;
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+[data-theme="dark"] {
+  --bg: #090d16;            /* พื้นหลังโหมดมืด */
+  --bg2: #111827;
+  --bg3: #1f2937;
+  --text: #f9fafb;
+  --border: #374151;
+}</code></pre>
+
+<h3>2. โครงสร้าง Viewport Pan & Zoom และ Canvas Styling</h3>
+<p>
+จุดสำคัญที่ผมออกแบบไว้เพื่อให้ Canvas 1248×1248 แสดงผลได้สมบูรณ์บนทุกขนาดหน้าจอคือการจัดการผ่าน CSS:
+</p>
+<pre><code>/* กล่อง Viewport สำหรับการซูมและเลื่อนกระดาน */
+.pie-canvas-wrap {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg3);
+  user-select: none;
+  touch-action: none; /* ป้องกันเบราว์เซอร์แย่งจับท่าทางเลื่อนหน้าจอ */
+}
+
+/* ผืนผ้าใบพรีวิวและสตูดิโอ */
+#pie-pcv, #pie-ecv {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  background: #ffffff;
+  transition: width 0.15s ease, height 0.15s ease;
+}</code></pre>
+
+<!-- SECTION 3.3: JS PART 1 -->
+<div class="page-break"></div>
+<h2>3.3 ไฟล์ app.js (ส่วนที่ 1): Storage, 2D Geometry & เอนจินตัดคำไทย</h2>
+
+<h3>กลุ่มฟังก์ชัน Storage และข้อมูลสำรอง (Fallback Mock Data)</h3>
+<table>
+  <thead>
+    <tr>
+      <th class="line-num">บรรทัด</th>
+      <th class="code-col">โค้ด</th>
+      <th>หน้าที่และเหตุผลการออกแบบ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="line-num">1-14</td>
+      <td class="code-col">const Storage = { get(k, def) { ... }, set(k, v) { ... } };</td>
+      <td>ครอบ LocalStorage ด้วย <code>try...catch</code> ป้องกันเบราว์เซอร์ระเบิดเมื่อเปิดในโหมด Incognito หรือพื้นที่ความจำเต็ม</td>
+    </tr>
+    <tr>
+      <td class="line-num">15-35</td>
+      <td class="code-col">function getPeople() { ... }</td>
+      <td>ดึงรายชื่อสมาชิกวง MELiMEL FRUITY♡ (เช่น โมเน่ต์, มายด์, ซินดี้) ถ้าแอปหลักไม่ได้เชื่อมต่ออยู่ ระบบจะใช้ Mock Data นี้เป็นตัวแทนทันที</td>
+    </tr>
+    <tr>
+      <td class="line-num">50-55</td>
+      <td class="code-col">function showToast(msg, duration = 2200) { ... }</td>
+      <td>สร้างกล่องแจ้งเตือน Toast แบบลอยขึ้นมาด้านล่างหน้าจอ พร้อมแอนิเมชัน Fade In/Out อัตโนมัติ</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>ค่าคงที่ทางเรขาคณิตและแบบอักษร</h3>
+<pre><code>const PIE_S = 1248; // ขนาดด้านของ Canvas กว้าง x สูง 1248 x 1248 px
+const PIE_FONTS = [
+  'Sarabun', 'Kanit', 'Prompt', 'Mitr', 'Noto Sans Thai',
+  'Chakra Petch', 'Pridi', 'Mali', 'Charm', 'Bai Jamjuree'
+];</code></pre>
+
+<h3>เอนจินตัดคำภาษาไทย (Thai Word-Wrapping Engine): `pieWrap()`</h3>
+<p>
+นี่คือหัวใจของระบบ Typography ที่ทำให้ข้อความภาษาไทยในรูปภาพตัดบรรทัดได้ถูกต้องตามหลักไวยากรณ์:
+</p>
+<pre><code>function pieSeg(text) {
+  if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+    try {
+      const seg = new Intl.Segmenter('th', { granularity: 'word' });
+      return Array.from(seg.segment(text), s => s.segment);
+    } catch(e) {}
+  }
+  return text.split(' '); // Fallback กรณีเบราว์เซอร์เก่า
+}
+
+function pieWrap(ctx, text, maxW) {
+  if (!text) return [];
+  const lines = [];
+  const paragraphs = String(text).split('\n');
+  for (const para of paragraphs) {
+    if (!para) { lines.push(''); continue; }
+    const words = pieSeg(para);
+    let cur = '';
+    for (const w of words) {
+      const test = cur + w;
+      if (ctx.measureText(test).width <= maxW) {
+        cur = test;
+      } else {
+        if (cur) lines.push(cur);
+        cur = w;
+      }
+    }
+    if (cur) lines.push(cur);
+  }
+  return lines;
+}</code></pre>
+
+<!-- SECTION 3.4: JS PART 2 -->
+<div class="page-break"></div>
+<h2>3.4 ไฟล์ app.js (ส่วนที่ 2): Navigation Stack, Sync & เอนจินส่งออกภาพ</h2>
+
+<h3>ระบบ Linear Navigation History Stack</h3>
+<p>
+ผมสร้างระบบประวัติการสลับหน้าจอของตัวเองขึ้นมา เพื่อให้ปุ่ม Back / Forward บนหน้าจอตอบสนองได้อย่างเป็นธรรมชาติ:
+</p>
+<pre><code>let pieNavHistory = [];
+let pieNavIdx = -1;
+
+function pieNavGo(view, title, push = true, payload = null) {
+  if (push) {
+    pieNavHistory = pieNavHistory.slice(0, pieNavIdx + 1);
+    pieNavHistory.push({ view, title, payload });
+    pieNavIdx = pieNavHistory.length - 1;
+  }
+  pieApplyNavStep(pieNavHistory[pieNavIdx]);
+  pieUpdateNavButtons();
+}</code></pre>
+
+<h3>การซิงค์ตารางงานและเพลงพร้อมแสดง (`pieSyncFromMember`)</h3>
+<table>
+  <thead>
+    <tr>
+      <th class="line-num">บรรทัด</th>
+      <th class="code-col">โค้ด</th>
+      <th>หน้าที่และเหตุผลการออกแบบ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="line-num">980-1010</td>
+      <td class="code-col">function pieSyncFromMember(name) { ... }</td>
+      <td>ค้นหาตารางงานของสมาชิกในสัปดาห์ปัจจุบัน แปลงหัวข้อและเวลา เช่น *"10:00 ซ้อมเต้น Main Stage"* แล้วนำไปกรอกลงในช่อง <code>#pie-b0</code> ถึง <code>#pie-b6</code> ให้แบบอัตโนมัติ</td>
+    </tr>
+    <tr>
+      <td class="line-num">1015-1040</td>
+      <td class="code-col">function pieInsertReadySong(title) { ... }</td>
+      <td>ค้นหาช่องวันที่ยังว่างอยู่ หรือเติมชื่อเพลงพร้อมซ้อมต่อท้ายในวันที่มีตารางซ้อม พร้อมข้อความแจ้งเตือน Toast</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>เอนจินส่งออกภาพ (Image Export & Web Share Engine): `pieExportImg()`</h3>
+<pre><code>async function pieExportImg(mime = 'image/png', share = false) {
+  const cv = document.createElement('canvas');
+  cv.width = cv.height = PIE_S; // เรนเดอร์บน Canvas ออฟไลน์ 1248x1248
+  await pieRender(cv, pieCur, pieCurWeekData);
+  
+  if (share && navigator.canShare) {
+    cv.toBlob(blob => {
+      const file = new File([blob], 'schedule.png', { type: mime });
+      navigator.share({ files: [file], title: 'ตารางงานประจำสัปดาห์' });
+    }, mime, 0.93);
+  } else {
+    const a = document.createElement('a');
+    a.download = "melimel-schedule-" + pieCurWeekData.iso + ".png";
+    a.href = cv.toDataURL(mime, 0.93);
+    a.click();
+  }
+}</code></pre>
+
+<!-- SECTION 3.5: JS PART 3 -->
+<div class="page-break"></div>
+<h2>3.5 ไฟล์ app.js (ส่วนที่ 3): Template Studio, 50-Step Undo & Computer Vision</h2>
+
+<h3>ระบบ Undo / Redo ประวัติ 50 ขั้น</h3>
+<p>
+ผมสร้างระบบ State Snapshot ในหน่วยความจำ โดยเก็บข้อมูลโครงสร้างฟิลด์และพื้นหลัง จำกัดความลึกไว้ที่ 50 สเต็ปเพื่อป้องกัน Memory Leak:
+</p>
+<pre><code>const PIE_MAX_HIST = 50;
+let pieHistory = [], pieHistIdx = -1;
+
+function piePushHistory() {
+  const s = pieSnapshotState(); if (!s) return;
+  // ตัดกิ่งอนาคตทิ้งถ้าเคย Undo มาก่อน
+  pieHistory = pieHistory.slice(0, pieHistIdx + 1);
+  pieHistory.push(s);
+  if (pieHistory.length > PIE_MAX_HIST) pieHistory.shift();
+  else pieHistIdx++;
+  pieUpdateHistoryBtns();
+}</code></pre>
+
+<h3>เอนจินตรวจจับช่องตารางอัตโนมัติ (Computer Vision Algorithm): `pieAutoDetect()`</h3>
+<p>
+ฟังก์ชันนี้ทำหน้าที่เสมือนสายตา AI ที่ตรวจจับขอบเขตของช่องตาราง 7 วันจากภาพพื้นหลัง โดยมีขั้นตอนทางคณิตศาสตร์ 5 ขั้นตอน:
+</p>
+<ol>
+  <li><b>Downsampling:</b> ย่อภาพลงบน Canvas ชั่วคราวขนาด 416×416 (k = 3) เพื่อลดเวลาคำนวณลง 9 เท่า</li>
+  <li><b>Color Thresholding:</b> กรองพิกเซลสีขาว/สว่างจ้า (RGB &gt;= 215 และ Delta &lt;= 22) บันทึกลง Binary Mask</li>
+  <li><b>3-Pass Morphological Erosion:</b> วนลูปกร่อนภาพ 3 รอบด้วยเคอร์เนล 3×3 เพื่อกำจัดสัญญาณรบกวนและลายเส้นแบ่ง</li>
+  <li><b>Connected Component Labeling:</b> ใช้ Stack-based Flood Fill ค้นหากลุ่มก้อนสี่เหลี่ยม คำนวณความหนาแน่น n / (w × h) &gt;= 0.7</li>
+  <li><b>Row Clustering & Field Mapping:</b> รวมกลุ่มแถวตามแกน Y คัดกรองเหลือ 7 แถวที่มีความกว้างสูงสุด แล้วคูณสเกล k = 3 กลับสู่ขนาดจริง 1248×1248</li>
+</ol>
+
+<!-- CHAPTER 4 -->
+<div class="page-break"></div>
+<h1>บทที่ 4: ตัวแปรสำคัญ วงจรข้อมูล และการดักจับข้อผิดพลาด</h1>
+
+<h2>4.1 ตัวแปรและสถานะหลัก (State Machines)</h2>
+<ul>
+  <li><code>pieCur</code>: เก็บสถานะของ Template ที่กำลังถูกใช้งานในหน้า Fill View (โครงสร้างธีม, รูปภาพ, รายการฟิลด์)</li>
+  <li><code>pieEd</code>: เก็บสถานะของ Template ในห้องทดลอง Studio Editor (รวมรายการฟิลด์ที่กำลังถูกเลือก <code>sels</code>)</li>
+  <li><code>pieCustom</code>: อาร์เรย์ของแม่แบบที่สร้างขึ้นเอง ซึ่งจะถูกแปลงเป็น JSON และบันทึกลง LocalStorage</li>
+  <li><code>pieDrag</code>: ตัวแปรเก็บสถานะการคลิกลากปัจจุบัน มี 3 โหมด: <code>'move'</code>, <code>'resize'</code>, <code>'marquee'</code></li>
+</ul>
+
+<h2>4.2 การจัดการกรณีขอบ (Edge Cases) และข้อผิดพลาด (Error Handling)</h2>
+<table>
+  <thead>
+    <tr>
+      <th>สถานการณ์ / กรณีขอบ</th>
+      <th>ความเสี่ยงที่อาจเกิดขึ้น</th>
+      <th>วิธีที่ผมเขียนดักไว้ในโค้ด</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>การลากกล่องออกนอกขอบ Canvas</td>
+      <td>กล่องหลุดหายออกไปนอกจอ ไม่สามารถคลิกเลือกได้อีก</td>
+      <td>ใช้ <code>Math.min(Math.max(0, x), PIE_S - w)</code> บังคับ Clamp พิกัดให้อยู่ในกรอบ 0 ถึง 1248 เสมอ</td>
+    </tr>
+    <tr>
+      <td>พื้นที่ LocalStorage เต็ม</td>
+      <td>เบราว์เซอร์โยน Error โค้ดพัง ข้อมูลสูญหาย</td>
+      <td>ครอบด้วย <code>try...catch</code> ใน <code>piePersist()</code> ถ้าเขียนไม่ผ่านจะ Rollback ข้อมูลใน RAM และขึ้น Toast แจ้งเตือน</td>
+    </tr>
+    <tr>
+      <td>การเคาะปุ่มลูกศร (Nudge) รัว ๆ</td>
+      <td>History Stack เต็มอย่างรวดเร็วด้วยการขยับทีละ 1px</td>
+      <td>สร้างตัวหน่วงเวลา Debounce 300ms (<code>_pieNudgeTimer</code>) รวบการเคาะ 50 ครั้งให้บันทึกเป็น 1 สเต็ปในประวัติ</td>
+    </tr>
+    <tr>
+      <td>โหลดรูปภาพพื้นหลังล้มเหลว</td>
+      <td>หน้าจอขาวค้าง หรือเกิด Uncaught Promise Rejection</td>
+      <td>ใน <code>pieLoadImg()</code> ผมดัก <code>img.onerror = () => resolve(null)</code> เพื่อให้แอปทำงานต่อได้อย่างปลอดภัย</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- CHAPTER 5 -->
+<div class="page-break"></div>
+<h1>บทที่ 5: เหตุผลเชิงการออกแบบและการตัดสินใจเชิงเทคนิค</h1>
+
+<h2>5.1 ทำไมต้อง Vanilla Canvas 2D แทน Fabric.js หรือ React?</h2>
+<div class="callout">
+  <b>เหตุผลเชิงสถาปัตยกรรม:</b>
+  ไลบรารีอย่าง Fabric.js หรือ Konva มีขนาดไฟล์หลายร้อย KB และสร้าง Object Wrapper ซ้อนกันหลายชั้น ทำให้กินหน่วยความจำมหาศาลเมื่อทำงานบนสมาร์ตโฟน โดยเฉพาะภาพความละเอียด 1248×1248 พิกเซล การเลือกใช้ Canvas 2D ดิบทำให้ผมควบคุมการใช้หน่วยความจำและ Render Loop ได้ 100% ส่งผลให้เว็บโหลดเร็วแทบจะในเสี้ยววินาที และไม่มีปัญหาเรื่อง Dependency หลุดเวอร์ชันในอนาคต
+</div>
+
+<h2>5.2 ทำไมต้อง Intl.Segmenter สำหรับตัดคำภาษาไทย?</h2>
+<p>
+ในอดีต การตัดคำภาษาไทยบนเว็บจำเป็นต้องโหลดพจนานุกรมขนาด 1–2 MB มาประมวลผลบนเบราว์เซอร์ ซึ่งทำให้เว็บโหลดช้ามาก แต่เบราว์เซอร์สมัยใหม่มี API มาตรฐาน <code>Intl.Segmenter('th', { granularity: 'word' })</code> ซึ่งเชื่อมตรงกับเอนจินภาษาของระบบปฏิบัติการ ผมจึงเลือกใช้วิธีนี้เพื่อให้ได้ประสิทธิภาพสูงสุดและขนาดบันเดิลเป็นศูนย์ (Zero Bundle Size)
+</p>
+
+<h2>5.3 การฉายพิกัดแบบ Matrix Projection (`piePt`)</h2>
+<p>
+เนื่องจาก Canvas ถูกย่อขยายตามขนาดหน้าจอ (เช่น บนมือถืออาจกว้างเพียง 350px แต่พิกัดจริงคือ 1248px) การใช้ <code>e.offsetX</code> แบบปกติจะทำให้พิกัดเพี้ยนทันที ผมจึงเขียนสูตรคำนวณตัวคูณสเกล k = 1248 / offsetWidth ขึ้นมา เพื่อแปลงจุดแตะของนิ้วให้กลายเป็นพิกัดบนผืนผ้าใบจริงได้อย่างแม่นยำระดับพิกเซล
+</p>
+
+<!-- CHAPTER 6 -->
+<div class="page-break"></div>
+<h1>บทที่ 6: กรณีศึกษาและการติดตามการทำงานจริง (Execution Traces)</h1>
+
+<h2>กรณีศึกษาที่ 1: การซิงค์ตารางงานสมาชิกวงและส่งออกรูปภาพ</h2>
+<ol>
+  <li>ผู้ใช้เปิดแอปที่หน้า Gallery และคลิกเลือกแม่แบบ <b>"MELiMEL Split"</b>
+    <br><code>pieGo('fill')</code> สลับมุมมองมาที่หน้ากรอกข้อมูล พร้อมคำนวณวันจันทร์ของสัปดาห์ปัจจุบัน
+  </li>
+  <li>ผู้ใช้คลิกชิปชื่อ <b>"น้องโมเน่ต์"</b>
+    <br><code>pieSyncFromMember("โมเน่ต์")</code> ดึงข้อมูลนัดหมายทั้ง 7 วัน แมปลงในกล่องข้อความ <code>#pie-b0</code> ถึง <code>#pie-b6</code> และเรียก <code>pieDrawFill()</code>
+  </li>
+  <li>ระบบเรนเดอร์ภาพพรีวิวสดลงบน <code>#pie-pcv</code> โดยตัดคำภาษาไทยและจัดวางตำแหน่งอัตโนมัติ</li>
+  <li>ผู้ใช้คลิกปุ่ม <b>"ส่งออก PNG (ชัดพิเศษ)"</b>
+    <br><code>pieExportImg('image/png')</code> สร้าง Canvas ออฟไลน์ขนาด 1248×1248 เรนเดอร์ภาพและส่งไฟล์ <code>melimel-schedule-2026-10-26.png</code> ให้ดาวน์โหลดทันที
+  </li>
+</ol>
+
+<h2>กรณีศึกษาที่ 2: การนำเข้ารูปตารางเปล่าและตรวจจับช่องอัตโนมัติ</h2>
+<ol>
+  <li>ผู้ใช้แคปเจอร์รูปภาพตารางงานใหม่ แล้วกด <code>Ctrl + V</code> ที่หน้า Gallery</li>
+  <li>Event <code>paste</code> ดักจับข้อมูลไบนารีรูปภาพ และส่งต่อให้ <code>pieLoadBgFile()</code></li>
+  <li>ฟังก์ชันปรับสเกลภาพให้พอดีกับ 1248×1248 แบบ Cover แล้วทริกเกอร์ <code>pieAutoDetect(true)</code></li>
+  <li>อัลกอริทึมย่อภาพลง 416×416 ทำ Binarization, 3-Pass Erosion และ Flood Fill ค้นพบกล่องข้อความ 7 แถว</li>
+  <li>สร้างรายการฟิลด์ลงใน <code>pieEd.fields</code> และแสดงผลบน Canvas พร้อมให้ผู้ใช้ปรับแต่งตำแหน่งได้ทันที</li>
+</ol>
+
+<!-- CHAPTER 7 -->
+<div class="page-break"></div>
+<h1>บทที่ 7: บทสรุป ข้อควรระวัง คำแนะนำการพัฒนาต่อ และวิธีทดสอบ</h1>
+
+<h2>7.1 จุดเด่นของระบบ (System Highlights)</h2>
+<ul>
+  <li><b>อิสระจากภายนอก 100%:</b> ไม่ต้องติดตั้ง Node Modules หรือ Build Step สามารถรันได้ทันทีบน Static Hosting</li>
+  <li><b>ความละเอียดระดับ 1:1 HD Social Standard:</b> ออกแบบให้พอดีกับอัลกอริทึมการแสดงผลของ Twitter และ Instagram</li>
+  <li><b>ประสบการณ์การใช้งานระดับ Desktop App:</b> มีทั้งระบบ Pan & Zoom, Undo/Redo 50 ขั้น และ Keyboard Shortcuts ครบถ้วน</li>
+</ul>
+
+<h2>7.2 ข้อควรระวังและข้อจำกัดที่ผมทราบ (Known Limitations)</h2>
+<div class="callout warn">
+  <b>1. ข้อจำกัดเรื่องขนาด LocalStorage:</b>
+  หากผู้ใช้สร้างแม่แบบ Custom ที่มีภาพพื้นหลังจำนวนมาก ข้อมูล Base64 อาจเต็มโควตา 5MB ของเบราว์เซอร์ ในอนาคตแนะนำให้เปลี่ยนไปใช้ <b>IndexedDB</b> แทน LocalStorage
+</div>
+<div class="callout warn">
+  <b>2. ความเข้ากันได้ของเบราว์เซอร์:</b>
+  เบราว์เซอร์รุ่นเก่าที่ต่ำกว่าปี 2021 อาจไม่รองรับ <code>Intl.Segmenter</code> ระบบจะตกกลับไปใช้วิธีแยกด้วยช่องว่าง (Whitespace Fallback) ซึ่งอาจทำให้คำภาษาไทยยาว ๆ ไม่ตัดบรรทัด
+</div>
+
+<h2>7.3 วิธีการรันและการทดสอบระบบ (How to Run & Test)</h2>
+<p>
+เนื่องจากระบบนี้เป็น Vanilla Web คุณสามารถเปิดทดสอบได้ง่ายดายด้วยวิธีต่อไปนี้:
+</p>
+<ol>
+  <li><b>รันแบบ Local File:</b> ดับเบิลคลิกไฟล์ <code>index.html</code> เพื่อเปิดบน Google Chrome, Microsoft Edge หรือ Safari ได้ทันที</li>
+  <li><b>รันผ่าน Local HTTP Server:</b>
+    <pre><code>npx serve x:\TESTWEB\planner-image-tool</code></pre>
+  </li>
+  <li><b>ทดสอบระบบตรวจจับช่อง (Auto-Detect):</b>
+    กดปุ่ม "+ สร้างแม่แบบใหม่" อัปโหลดรูปภาพที่มีตาราง 7 วัน แล้วกดปุ่ม "ตรวจจับช่องอัตโนมัติ" ตรวจสอบว่ามีกล่องสีชมพูปรากฏครบทั้ง 7 วันหรือไม่
+  </li>
+  <li><b>ทดสอบบนระบบ Deploy จริง:</b>
+    สามารถเข้าใช้งานระบบที่ผม Deploy ขึ้น Firebase Hosting ไว้ได้ที่:<br>
+    <code>https://kalabro-testdeploy.web.app/planner-image/</code>
+  </li>
+</ol>
+
+<div style="margin-top: 40px; text-align: center; color: #94a3b8; font-size: 9pt; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+  — จบเนื้อหาคู่มือนักพัฒนาฉบับสมบูรณ์ MELiMEL FRUITY♡ Planner Image Generator —
+</div>
+
+</body>
+</html>

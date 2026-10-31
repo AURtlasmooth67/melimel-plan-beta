@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MELiMEL FRUITY♡ - Design Direction Prototype (Phase D)</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-thai: 'IBM Plex Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
+      --transition-norm: 220ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-thai);
+      min-height: 100vh;
+      background: #0f172a;
+      color: #f8fafc;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Control Bar */
+    .control-header {
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ff5c8a;
+    }
+    .badge-beta {
+      background: #ff5c8a;
+      color: white;
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .selector-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .dir-btn, .mode-btn {
+      background: #0f172a;
+      border: 1px solid #475569;
+      color: #cbd5e1;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all var(--transition-norm);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dir-btn:hover, .mode-btn:hover {
+      border-color: #ff5c8a;
+      color: #fff;
+    }
+    .dir-btn.active {
+      background: #ff5c8a;
+      color: white;
+      border-color: #ff5c8a;
+      font-weight: 600;
+      box-shadow: 0 0 12px rgba(255, 92, 138, 0.4);
+    }
+    .mode-btn.active {
+      background: #334155;
+      color: #38bdf8;
+      border-color: #38bdf8;
+    }
+
+    /* Prototype Viewer Area */
+    .prototype-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 24px 16px 40px;
+      background: #090d16;
+    }
+
+    .preview-frame {
+      width: 100%;
+      max-width: 420px;
+      min-height: 840px;
+      background: #fff;
+      color: #1e293b;
+      border-radius: 36px;
+      box-shadow: 0 25px 60px -15px rgba(0,0,0,0.7), 0 0 0 10px #1e293b;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: max-width 0.3s ease, border-radius 0.3s ease, box-shadow 0.3s ease;
+    }
+    .preview-frame.desktop-mode {
+      max-width: 1080px;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.6), 0 0 0 1px #334155;
+    }
+
+    /* Common App Shell inside frame */
+    .app-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      position: relative;
+    }
+
+    /* Phone notch/status bar */
+    .phone-status-bar {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #64748b;
+      user-select: none;
+    }
+    .desktop-mode .phone-status-bar { display: none; }
+
+    /* App Nav Header */
+    .app-header {
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .app-title {
+      font-weight: 700;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sync-status {
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+    .sync-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+
+    /* App Content */
+    .screen-content {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Bottom App Tabs */
+    .app-bottom-nav {
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 12px 16px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .nav-item svg { width: 22px; height: 22px; stroke-width: 2; }
+    .nav-item.active {
+      color: var(--theme-primary);
+      font-weight: 600;
+    }
+
+    /* ========================================================= */
+    /* DIRECTION 1: FRUITY GLASS & CLEAN (Soft Glassmorphism)   */
+    /* ========================================================= */
+    .dir-glass {
+      --theme-primary: #ff5c8a;
+      --theme-primary-soft: #ffeaf1;
+      --theme-primary-hover: #e63e6f;
+      --bg-surface: #fff5f8;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --card-border: rgba(255, 92, 138, 0.15);
+      --text-main: #1e1b24;
+      --text-muted: #64748b;
+      --border-color: rgba(226, 232, 240, 0.8);
+      --nav-bg: rgba(255, 255, 255, 0.9);
+      --card-radius: 20px;
+      --card-shadow: 0 8px 24px -6px rgba(255, 92, 138, 0.12);
+      background: linear-gradient(145deg, #fff2f6 0%, #fdf8fa 50%, #f8f4ff 100%);
+      color: var(--text-main);
+    }
+    .dir-glass.dark-theme {
+      --bg-surface: #14121a;
+      --card-bg: rgba(29, 25, 36, 0.75);
+      --card-border: rgba(255, 92, 138, 0.25);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --nav-bg: rgba(20, 18, 26, 0.92);
+      --card-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.5);
+      background: linear-gradient(145deg, #16121e 0%, #110e17 100%);
+      color: var(--text-main);
+    }
+    .dir-glass .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--card-radius);
+      box-shadow: var(--card-shadow);
+      padding: 16px;
+    }
+
+    /* ========================================================= */
+    /* DIRECTION 2: NEO-FRUITY BENTO (Clean Structured Dashboard)*/
+    /* ========================================================= */
+    .dir-bento {
+      --theme-primary: #e63968;
+      --theme-primary-soft: #ffe4eb;
+      --theme-primary-hover: #c92350;
+      --bg-surface: #f8fafc;
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-color: #cbd5e1;
+      --nav-bg: #ffffff;
+      --card-radius: 12px;
+      --card-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+      background: var(--bg-surface);
+      color: var(--text-main);
+    }
+    .dir-bento.dark-theme {
+      --bg-surface: #0b0f17;
+      --card-bg: #151c28;
+      --card-border: #232d3f;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border-color: #1e293b;
+      --nav-bg: #151c28;
+      --card-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      background: var(--bg-surface);
+      color: var(--text-main);
+    }
+    .dir-bento .glass-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: var(--card-radius);
+      box-shadow: var(--card-shadow);
+      padding: 16px;
+    }
+
+    /* ========================================================= */
+    /* DIRECTION 3: COZY CREATOR STREAM (Timeline & Minimal Flow)*/
+    /* ========================================================= */
+    .dir-cozy {
+      --theme-primary: #f43f5e;
+      --theme-primary-soft: #fff1f2;
+      --theme-primary-hover: #e11d48;
+      --bg-surface: #faf9f6;
+      --card-bg: #ffffff;
+      --card-border: #edebe8;
+      --text-main: #27272a;
+      --text-muted: #71717a;
+      --border-color: #e4e4e7;
+      --nav-bg: #faf9f6;
+      --card-radius: 16px;
+      --card-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      background: var(--bg-surface);
+      color: var(--text-main);
+    }
+    .dir-cozy.dark-theme {
+      --bg-surface: #18181b;
+      --card-bg: #27272a;
+      --card-border: #3f3f46;
+      --text-main: #fafafa;
+      --text-muted: #a1a1aa;
+      --border-color: #3f3f46;
+      --nav-bg: #18181b;
+      --card-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      background: var(--bg-surface);
+      color: var(--text-main);
+    }
+    .dir-cozy .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--card-radius);
+      box-shadow: var(--card-shadow);
+      padding: 16px;
+    }
+
+    /* Common UI components in Cards */
+    .card-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .card-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--theme-primary-soft);
+      color: var(--theme-primary);
+    }
+
+    /* Task / Song Item List */
+    .task-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: rgba(0,0,0,0.02);
+      border-radius: 12px;
+      margin-bottom: 8px;
+      border: 1px solid var(--border-color);
+      transition: transform 0.15s ease;
+    }
+    .dir-glass.dark-theme .task-item,
+    .dir-bento.dark-theme .task-item,
+    .dir-cozy.dark-theme .task-item {
+      background: rgba(255,255,255,0.03);
+    }
+    .task-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .status-pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .pill-recording { background: #fef3c7; color: #b45309; }
+    .pill-post { background: #dbeafe; color: #1d4ed8; }
+    .pill-done { background: #d1fae5; color: #047857; }
+    .dark-theme .pill-recording { background: #78350f; color: #fde68a; }
+    .dark-theme .pill-post { background: #1e3a8a; color: #bfdbfe; }
+    .dark-theme .pill-done { background: #064e3b; color: #a7f3d0; }
+
+    .btn-primary {
+      background: var(--theme-primary);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 12px rgba(255, 92, 138, 0.25);
+    }
+
+    /* Calendar Grid Minimal */
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-top: 10px;
+      text-align: center;
+    }
+    .cal-day-head {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 4px 0;
+    }
+    .cal-cell {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      position: relative;
+    }
+    .cal-cell.today {
+      border-color: var(--theme-primary);
+      font-weight: 700;
+      color: var(--theme-primary);
+    }
+    .cal-cell.has-event::after {
+      content: '';
+      width: 4px;
+      height: 4px;
+      background: var(--theme-primary);
+      border-radius: 50%;
+      position: absolute;
+      bottom: 4px;
+    }
+
+    /* Desktop layout overrides */
+    .desktop-mode .screen-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .desktop-mode .full-col {
+      grid-column: 1 / -1;
+    }
+    .desktop-mode .app-bottom-nav {
+      justify-content: center;
+      gap: 32px;
+      padding: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Controls Bar -->
+  <header class="control-header">
+    <div class="brand-title">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+      </svg>
+      <span>MELiMEL FRUITY♡</span>
+      <span class="badge-beta">BETA DESIGN LAB</span>
+    </div>
+
+    <!-- Direction Selector -->
+    <div class="selector-bar">
+      <span style="font-size: 0.82rem; color: #94a3b8; margin-right: 4px;">เลือกทิศทาง:</span>
+      <button class="dir-btn active" id="btn-dir1" onclick="setDirection('glass')">
+        1. Fruity Glass & Clean (แนะนำ)
+      </button>
+      <button class="dir-btn" id="btn-dir2" onclick="setDirection('bento')">
+        2. Neo-Fruity Bento
+      </button>
+      <button class="dir-btn" id="btn-dir3" onclick="setDirection('cozy')">
+        3. Cozy Creator Stream
+      </button>
+    </div>
+
+    <!-- View & Theme toggles -->
+    <div class="selector-bar">
+      <button class="mode-btn" id="btn-theme" onclick="toggleTheme()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <span>ธีมมืด / สว่าง</span>
+      </button>
+      <button class="mode-btn" id="btn-viewport" onclick="toggleViewport()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+        <span id="txt-viewport">ดูแบบเดสก์ท็อป</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Interactive Sandbox -->
+  <main class="prototype-container">
+    <div class="preview-frame dir-glass" id="app-frame">
+      <div class="app-screen">
+
+        <!-- Phone Status Mock -->
+        <div class="phone-status-bar">
+          <span>21:45</span>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="16" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/></svg>
+          </div>
+        </div>
+
+        <!-- Top Header -->
+        <div class="app-header">
+          <div class="app-title">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--theme-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.5V11a1 1 0 0 0-2 0v5.5a1 1 0 0 0 2 0zM12 7a1.25 1.25 0 1 0 0 2.5A1.25 1.25 0 0 0 12 7z"/>
+            </svg>
+            <span id="title-text">วันนี้ของฉัน</span>
+          </div>
+          <div class="sync-status" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+            <span class="sync-dot"></span>
+            <span>ซิงก์เรียลไทม์</span>
+          </div>
+        </div>
+
+        <!-- Dynamic Screen Content -->
+        <div class="screen-content" id="screen-body">
+
+          <!-- Card 1: 3-Second Action Card -->
+          <div class="glass-card full-col">
+            <div class="card-title-row">
+              <div class="card-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                <span>ต้องทำด่วนวันนี้ (3 วินาทีรู้เรื่อง)</span>
+              </div>
+              <span class="card-badge">2 งาน</span>
+            </div>
+
+            <div class="task-item">
+              <div class="task-left">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <div>
+                  <div style="font-weight:600; font-size:0.92rem;">ヴァンパイア (Vampire)</div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">อัดเสียงท่อนฮุค • วันนี้ 18:00</div>
+                </div>
+              </div>
+              <span class="status-pill pill-recording">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="6"/></svg>
+                กำลังอัด
+              </span>
+            </div>
+
+            <div class="task-item">
+              <div class="task-left">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <div>
+                  <div style="font-weight:600; font-size:0.92rem;">アイドル (Idol)</div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">ส่งไฟล์มิกเซอร์ • พรุ่งนี้เดดไลน์</div>
+                </div>
+              </div>
+              <span class="status-pill pill-post">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                มิกซ์/ตัดต่อ
+              </span>
+            </div>
+
+            <button class="btn-primary" style="margin-top: 6px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>เพิ่มเพลงใหม่ (≤3 แตะ)</span>
+            </button>
+          </div>
+
+          <!-- Card 2: Calendar Overview -->
+          <div class="glass-card">
+            <div class="card-title-row">
+              <div class="card-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <span>ตารางสัปดาห์นี้ (ต.ค. 2569)</span>
+              </div>
+              <span style="font-size: 0.75rem; color: var(--theme-primary); font-weight: 600; cursor: pointer;">ดูทั้งหมด →</span>
+            </div>
+            <div class="cal-grid">
+              <div class="cal-day-head">จ.</div>
+              <div class="cal-day-head">อ.</div>
+              <div class="cal-day-head">พ.</div>
+              <div class="cal-day-head">พฤ.</div>
+              <div class="cal-day-head">ศ.</div>
+              <div class="cal-day-head">ส.</div>
+              <div class="cal-day-head">อา.</div>
+
+              <div class="cal-cell today has-event">12</div>
+              <div class="cal-cell has-event">13</div>
+              <div class="cal-cell">14</div>
+              <div class="cal-cell has-event">15</div>
+              <div class="cal-cell">16</div>
+              <div class="cal-cell" style="opacity: 0.4;">17</div>
+              <div class="cal-cell" style="opacity: 0.4;">18</div>
+            </div>
+          </div>
+
+          <!-- Card 3: Team Routine & Auto-scheduler -->
+          <div class="glass-card">
+            <div class="card-title-row">
+              <div class="card-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <span>ผู้ช่วยจัดตารางอัตโนมัติ</span>
+              </div>
+              <span class="card-badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">3 ขั้นตอน</span>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">
+              คำนวณกระจายงานเพลงค้าง 4 เพลงให้อัตโนมัติ (ข้ามเสาร์-อาทิตย์, เว้นระยะลงหลังอัด 3 วัน)
+            </p>
+            <div style="display:flex; gap: 8px;">
+              <button class="task-item" style="flex:1; justify-content:center; font-weight:600; font-size:0.85rem; cursor:pointer;">
+                ดูตัวอย่างผลลัพธ์
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Clean Bottom Nav (Max 5 Tabs with SVG icons) -->
+        <nav class="app-bottom-nav">
+          <a class="nav-item active" onclick="switchNav(this, 'วันนี้ของฉัน')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>วันนี้</span>
+          </a>
+          <a class="nav-item" onclick="switchNav(this, 'คลังเพลง')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            <span>คลังเพลง</span>
+          </a>
+          <a class="nav-item" onclick="switchNav(this, 'ปฏิทินงาน')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>ปฏิทิน</span>
+          </a>
+          <a class="nav-item" onclick="switchNav(this, 'คัมบัง')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+            <span>คัมบัง</span>
+          </a>
+          <a class="nav-item" onclick="switchNav(this, 'เพิ่มเติม')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+            <span>เพิ่มเติม</span>
+          </a>
+        </nav>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const appFrame = document.getElementById('app-frame');
+    const titleText = document.getElementById('title-text');
+    let isDark = false;
+    let isDesktop = false;
+
+    function setDirection(dir) {
+      document.querySelectorAll('.dir-btn').forEach(b => b.classList.remove('active'));
+      appFrame.classList.remove('dir-glass', 'dir-bento', 'dir-cozy');
+
+      if (dir === 'glass') {
+        document.getElementById('btn-dir1').classList.add('active');
+        appFrame.classList.add('dir-glass');
+      } else if (dir === 'bento') {
+        document.getElementById('btn-dir2').classList.add('active');
+        appFrame.classList.add('dir-bento');
+      } else if (dir === 'cozy') {
+        document.getElementById('btn-dir3').classList.add('active');
+        appFrame.classList.add('dir-cozy');
+      }
+    }
+
+    function toggleTheme() {
+      isDark = !isDark;
+      if (isDark) {
+        appFrame.classList.add('dark-theme');
+      } else {
+        appFrame.classList.remove('dark-theme');
+      }
+    }
+
+    function toggleViewport() {
+      isDesktop = !isDesktop;
+      const txt = document.getElementById('txt-viewport');
+      if (isDesktop) {
+        appFrame.classList.add('desktop-mode');
+        txt.textContent = 'ดูแบบมือถือ (390px)';
+      } else {
+        appFrame.classList.remove('desktop-mode');
+        txt.textContent = 'ดูแบบเดสก์ท็อป';
+      }
+    }
+
+    function switchNav(el, title) {
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+      titleText.textContent = title;
+    }
+  </script>
+</body>
+</html>

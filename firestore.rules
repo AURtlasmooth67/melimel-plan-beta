@@ -1,0 +1,86 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper Functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEmailVerified() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+
+    function userEmail() {
+      return request.auth.token.email;
+    }
+
+    // A user is a member if an entry in 'members' collection exists for their email with status active
+    function isMember() {
+      return isSignedIn() && isEmailVerified() && (
+        userEmail() == "poopo7096@gmail.com" ||
+        exists(/databases/$(database)/documents/members/$(userEmail()))
+      );
+    }
+
+    // Admin verification: initial seed email or doc marked as admin
+    function isAdmin() {
+      return isSignedIn() && isEmailVerified() && (
+        userEmail() == "poopo7096@gmail.com" ||
+        (exists(/databases/$(database)/documents/members/$(userEmail())) &&
+         get(/databases/$(database)/documents/members/$(userEmail())).data.role == "admin")
+      );
+    }
+
+    // Members collection
+    match /members/{email} {
+      allow read: if isMember();
+      allow write: if isAdmin();
+    }
+
+    // Songs collection
+    match /songs/{songId} {
+      allow read: if isMember();
+      allow create, update: if isMember();
+      allow delete: if isAdmin() || isMember();
+    }
+
+    // Calendar Plans collection (plan/{date})
+    match /plan/{date} {
+      allow read: if isMember();
+      allow write: if isMember();
+    }
+
+    // Kanban Columns / Status settings
+    match /settings/columns {
+      allow read: if isMember();
+      allow write: if isAdmin();
+    }
+
+    // General Settings (app theme, team wallpaper, etc.)
+    match /settings/{docId} {
+      allow read: if isMember();
+      allow write: if isAdmin();
+    }
+
+    // Tickets collection
+    match /tickets/{ticketId} {
+      allow read: if isMember();
+      allow create, update, delete: if isMember();
+    }
+
+    // Activity Log
+    match /activities/{activityId} {
+      allow read: if isMember();
+      allow create: if isMember();
+      allow update, delete: if isAdmin();
+    }
+
+    // Week Plan, Big Jobs, Goals, Scripts
+    match /{document=**} {
+      allow read: if isMember();
+      allow write: if isMember();
+    }
+  }
+}

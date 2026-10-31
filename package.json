@@ -1,0 +1,32 @@
+{
+  "name": "melimel-plan-beta",
+  "private": true,
+  "version": "1.0.0-beta",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:rules": "vitest run tests/rules.test.ts",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "canvas-confetti": "^1.9.4",
+    "firebase": "^11.10.0",
+    "lucide": "^1.16.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@firebase/rules-unit-testing": "5.0.2",
+    "@playwright/test": "^1.64.0",
+    "@types/canvas-confetti": "^1.9.0",
+    "@types/node": "^22.13.10",
+    "@vitest/ui": "^3.0.8",
+    "axe-core": "^4.14.0",
+    "playwright": "^1.64.0",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.1",
+    "vitest": "^3.0.8"
+  }
+}

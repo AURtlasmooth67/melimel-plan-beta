@@ -1,0 +1,140 @@
+/* ==========================================================================
+   DESIGN TOKENS - DIRECTION 1: FRUITY GLASS & CLEAN (MELiMEL POP MODERN)
+   ========================================================================== */
+:root {
+  /* Brand Identity - Fresh Strawberry Milk & Melon Accents */
+  --color-primary-50:  #fff0f5;
+  --color-primary-100: #ffe4ee;
+  --color-primary-200: #ffc2d7;
+  --color-primary-300: #ffa6c9;
+  --color-primary-400: #ff7aa8;
+  --color-primary-500: #ff5c8a; /* Primary Pink */
+  --color-primary-600: #e63e6f;
+  --color-primary-700: #c22956;
+  --color-primary-800: #9e1c44;
+  --color-primary-900: #8a1538;
+
+  --color-accent-teal: #14b8a6;
+  --color-accent-purple: #8b5cf6;
+
+  /* Surfaces & Glassmorphism (Light Mode) */
+  --bg-app: #fff5f8;
+  --bg-gradient: linear-gradient(145deg, #fff2f6 0%, #fdf8fa 50%, #f8f4ff 100%);
+  --surface-card: rgba(255, 255, 255, 0.88);
+  --surface-overlay: rgba(255, 255, 255, 0.95);
+  --surface-muted: rgba(241, 245, 249, 0.75);
+  --border-card: rgba(255, 92, 138, 0.16);
+  --border-subtle: rgba(226, 232, 240, 0.8);
+  --card-blur: 14px;
+
+  /* Text Colors with WCAG AA/AAA Contrast */
+  --text-main: #1e1b24;
+  --text-muted: #52525b;
+  --text-sub: #71717a;
+  --text-on-primary: #ffffff;
+
+  /* Status Tokens (Color + Icon + Text) */
+  --status-todo-bg: rgba(100, 116, 139, 0.12);
+  --status-todo-text: #475569;
+  --status-rec-bg: rgba(217, 119, 6, 0.14);
+  --status-rec-text: #b45309;
+  --status-post-bg: rgba(37, 99, 235, 0.14);
+  --status-post-text: #1d4ed8;
+  --status-done-bg: rgba(16, 185, 129, 0.14);
+  --status-done-text: #047857;
+
+  /* Radius & Shadows */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 8px 24px -6px rgba(255, 92, 138, 0.14);
+  --shadow-lg: 0 16px 36px -8px rgba(255, 92, 138, 0.2);
+
+  /* Animations & Transitions */
+  --anim-fast: 140ms cubic-bezier(0.4, 0, 0.2, 1);
+  --anim-normal: 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  --anim-bounce: 360ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Typography */
+  --font-family: 'IBM Plex Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem; /* 16px minimum */
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+
+  --nav-height: 56px;
+  --bottom-bar-height: 64px;
+
+  /* Legacy Compatibility Variables (for Planner Image Editor & tools) */
+  --surface: var(--surface-card);
+  --surface2: var(--surface-muted);
+  --border: var(--border-subtle);
+  --border2: rgba(255, 92, 138, 0.3);
+  --text: var(--text-main);
+  --text2: var(--text-main);
+  --text3: var(--text-muted);
+  --accent: var(--color-primary-500);
+  --main-ch: var(--color-primary-500);
+  --main-light: var(--color-primary-50);
+  --danger: #ef4444;
+  --bg3: var(--surface-muted);
+  --shadow: var(--shadow-card);
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.85rem;
+  --fs-md: 0.95rem;
+  --fs-lg: 1.15rem;
+  --radius: var(--radius-md);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Dark Mode Tokens */
+[data-theme="dark"] {
+  --bg-app: #121016;
+  --bg-gradient: linear-gradient(145deg, #16121c 0%, #110e17 100%);
+  --surface-card: rgba(29, 25, 36, 0.82);
+  --surface-overlay: rgba(24, 20, 31, 0.96);
+  --surface-muted: rgba(39, 34, 49, 0.7);
+  --border-card: rgba(255, 92, 138, 0.24);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+
+  --text-main: #fafafa;
+  --text-muted: #a1a1aa;
+  --text-sub: #71717a;
+
+  --status-todo-bg: rgba(148, 163, 184, 0.16);
+  --status-todo-text: #cbd5e1;
+  --status-rec-bg: rgba(245, 158, 11, 0.2);
+  --status-rec-text: #fde68a;
+  --status-post-bg: rgba(59, 130, 246, 0.2);
+  --status-post-text: #bfdbfe;
+  --status-done-bg: rgba(16, 185, 129, 0.2);
+  --status-done-text: #a7f3d0;
+
+  --shadow-card: 0 8px 24px -6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 16px 36px -8px rgba(0, 0, 0, 0.7);
+}
+
+/* Reduced Motion Setting */
+[data-reduced-motion="true"] *,
+[data-reduced-motion="true"] *::before,
+[data-reduced-motion="true"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

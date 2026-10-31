@@ -1,0 +1,46 @@
+Line 17: /* ============================================================ | Next: DESIGN TOKENS & SYSTEM FONTS (A1)
+Line 117: /* ============================================================ | Next: LAYOUT
+Line 230: /* ============================================================ | Next: COMPONENTS
+Line 704: /* ============================================================ | Next: UTILITY & DISPLAY HELPERS
+Line 711: /* ============================================================ | Next: PLANNER IMAGE EDITOR STYLES (INTEGRATED)
+Line 2296: /* ============================================================ | Next: KANBAN & STATUS CONSTANTS (TASK E)
+Line 2304: /* ============================================================ | Next: KANBAN COLUMNS & DYNAMIC STAGES
+Line 2323: /* ============================================================ | Next: USER PROFILE & LOCAL IDENTITY HELPERS (PER-ACCOUNT)
+Line 2356: /* ============================================================ | Next: STORAGE LAYER & MIGRATIONS (SCHEMA_VER 3)
+Line 2530: /* ============================================================ | Next: FIREBASE REALTIME & AUTH CONFIGURATION
+Line 2552: /* ============================================================ | Next: GOOGLE AUTHENTICATION & ACCESS CONTROL
+Line 2800: /* ============================================================ | Next: FIREBASE REALTIME CLOUD SYNC MANAGER
+Line 3024: /* ============================================================ | Next: SEED DATA & HELPERS
+Line 3141: /* ============================================================ | Next: DYNAMIC PEOPLE HELPERS (B7, B8)
+Line 3216: /* ============================================================ | Next: UTILITIES & CUSTOM CONFIRM MODAL (A6)
+Line 3281: /* ============================================================ | Next: THEME
+Line 3298: /* ============================================================ | Next: NAVIGATION
+Line 3496: /* ============================================================ | Next: 1. LIBRARY
+Line 3724: /* ============================================================ | Next: 2. CALENDAR (A2, A3, A4 & TAP TO SCHEDULE)
+Line 4120: /* ============================================================ | Next: 3. KANBAN (DYNAMIC COLUMNS WITH ‹ › BUTTONS)
+Line 4316: /* ============================================================ | Next: 4. TICKETS SYSTEM (C11, C12, C13)
+Line 4579: /* ============================================================ | Next: CROSS-DEVICE TICKET TRANSFER (C13)
+Line 4672: /* ============================================================ | Next: 5. TEMPLATE
+Line 4761: /* ============================================================ | Next: 6. DEADLINES (WITH CUSTOM COLOR)
+Line 4845: /* ============================================================ | Next: 7. GOALS & SUBS
+Line 5057: /* ============================================================ | Next: 8. SCRIPTS (A3)
+Line 5127: /* ============================================================ | Next: 9. TEAM MANAGEMENT (B7, B8, B10)
+Line 5244: /* ============================================================ | Next: 10. SETTINGS & EXPORT (A5)
+Line 5424: /* ============================================================ | Next: MOUSE WHEEL HORIZONTAL SCROLL HELPER FOR DESKTOP
+Line 5439: /* ============================================================ | Next: INIT & EVENT BINDINGS
+Line 5639: /* ============================================================ | Next: PLANNER IMAGE EDITOR LOGIC (INTEGRATED)
+Line 7681: /* ============================================================ | Next: ADDON v2 — ศูนย์ควบคุมทีม: ตารางรวม, Log, YouTube, Discord,
+Line 7696: /* ---------- 2. LOG ---------- */ | Next: function xlog(type,msg){const a=jget(LK,[]);a.unshift({t:new Date().toISOString(),u:getMyName(),type,msg});localStorage.setItem(LK,JSON.stringify(a.slice(0,500)));}
+Line 7715: /* ---------- helpers ---------- */ | Next: const songs=()=>Storage.get('songs')||[], plan=()=>Storage.get('plan')||{};
+Line 7727: /* ---------- 8. กันลงซ้ำ ---------- */ | Next: const _add=window.addToCal;
+Line 7740: /* ---------- 5. YouTube ---------- */ | Next: const ytId=u=>{const m=String(u||'').match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([\w-]{11})/);return m&&m[1]};
+Line 7757: /* ---------- 4. สรุปในคลังเพลง (ตัวเลขคมชัด + รวมมิกเซอร์ ครบทุกสถานะ) ---------- */ | Next: const _rlib=window.renderLibrary;
+Line 7773: /* ---------- 3. เดือน → กดดูรายวัน ---------- */ | Next: const _rm=window.renderMonthView;
+Line 7791: /* ---------- 6,7,11. Discord ---------- */ | Next: async function send(embeds,tag){
+Line 7814: /* ---------- 12,13. ตัวจัดตารางอัตโนมัติ (ไม่ลงวันอัดซ้ำ + กรองหมวดได้ + เชื่อมต่อจริง) ---------- */ | Next: function schedule(o) {
+Line 7899: /* ---------- HUB UI ---------- */ | Next: const TABS=[['grid','📋 ตารางรวม'],['today','✅ วันนี้'],['auto','🤖 จัดอัตโนมัติ'],['routine','🔁 Routine'],['alert','⏰ เดดไลน์'],['guide','📖 ฟีเจอร์']];
+Line 7991: /* ---------- ย้าย Discord/API + Log ไปหน้าแอดมิน ---------- */ | Next: X.renderAdmin=function(){
+Line 8017: /* ============================================================ | Next: ADDON v4 — ปุ่มเคลียร์ตารางในปฏิทิน (เฉพาะแอดมิน)
+Line 8094: /* ============================================================ | Next: ADDON v5 — ปุ่มกรอง "ยังไม่ลงตาราง" ในคลังเพลง
+Line 8124: /* ============================================================ | Next: ADMIN KANBAN COLUMN MANAGER & CALENDAR AUTO SCHEDULER
+Line 8443: /* ============================================================ | Next: ===== MOTION =====

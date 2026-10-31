@@ -1,0 +1,562 @@
+﻿   PLANNER IMAGE EDITOR LOGIC (INTEGRATED)
+   ============================================================ */
+const PIE_S = 1248;
+const PIE_FONTS = ['Noto Sans Thai', 'Sarabun', 'IBM Plex Sans Thai', 'Mali', 'Pridi'];
+const PIE_MS = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const PIE_MF = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+const PIE_DF = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+const PIE_DS = ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
+const PIE_DE = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const PIE_KL = { dayname: 'ชื่อวัน', date: 'วันที่', body: 'งาน', range: 'ช่วงสัปดาห์' };
+
+const pieP2 = n => String(n).padStart(2, '0');
+const pieIso = d => `${d.getFullYear()}-${pieP2(d.getMonth() + 1)}-${pieP2(d.getDate())}`;
+const pieParse = v => { const [a, b, c] = v.split('-').map(Number); return new Date(a, b - 1, c); };
+const pieAddD = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+function pieMonday(d) { const x = pieAddD(d, 0); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x; }
+
+let pieUid = 0;
+const pieNid = () => 'f' + Date.now().toString(36) + (pieUid++);
+
+// Theme Presets
+const PIE_THEMES = [
+  { 
+    id: 'charcoal', 
+    name: 'Charcoal Minimal', 
+    bg: '#ffffff', 
+    card: '#5c5f66', 
+    photoBg: '#5c5f66', 
+    note: '#4b4e56', 
+    badge: '#3b3d44', 
+    title: '#374151', 
+    range: '#6b7280', 
+    head: '#ffffff', 
+    acc: '#cbd5e1', 
+    ink: '#f3f4f6' 
+  },
+  { 
+    id: 'dark', 
+    name: 'Night Neon', 
+    bg: '#0d1117', 
+    card: '#161b22', 
+    photoBg: '#161b22', 
+    note: '#21262d', 
+    badge: '#30363d', 
+    title: '#58a6ff', 
+    range: '#8b949e', 
+    head: '#58a6ff', 
+    acc: '#bc8cff', 
+    ink: '#e6edf3' 
+  },
+  { 
+    id: 'pink', 
+    name: 'Peach & Rose', 
+    bg: '#fff1f2', 
+    card: '#ffe4e6', 
+    photoBg: '#ffe4e6', 
+    note: '#fecdd3', 
+    badge: '#fda4af', 
+    title: '#9f1239', 
+    range: '#be123c', 
+    head: '#881337', 
+    acc: '#e11d48', 
+    ink: '#4c0519' 
+  },
+  { 
+    id: 'cyan', 
+    name: 'Ocean Cyan', 
+    bg: '#ecfeff', 
+    card: '#cffafe', 
+    photoBg: '#cffafe', 
+    note: '#a5f3fc', 
+    badge: '#67e8f9', 
+    title: '#155e75', 
+    range: '#0e7490', 
+    head: '#164e63', 
+    acc: '#0891b2', 
+    ink: '#083344' 
+  },
+  { 
+    id: 'purple', 
+    name: 'Lavender Violet', 
+    bg: '#faf5ff', 
+    card: '#f3e8ff', 
+    photoBg: '#f3e8ff', 
+    note: '#e9d5ff', 
+    badge: '#d8b4fe', 
+    title: '#6b21a8', 
+    range: '#7e22ce', 
+    head: '#581c87', 
+    acc: '#9333ea', 
+    ink: '#3b0764' 
+  },
+  { 
+    id: 'mint', 
+    name: 'Matcha Mint', 
+    bg: '#f0fdf4', 
+    card: '#dcfce7', 
+    photoBg: '#dcfce7', 
+    note: '#bbf7d0', 
+    badge: '#86efac', 
+    title: '#166534', 
+    range: '#15803d', 
+    head: '#14532d', 
+    acc: '#16a34a', 
+    ink: '#052e16' 
+  },
+  { 
+    id: 'warm', 
+    name: 'Sunset Amber', 
+    bg: '#fffbeb', 
+    card: '#fef3c7', 
+    photoBg: '#fef3c7', 
+    note: '#fde68a', 
+    badge: '#fcd34d', 
+    title: '#92400e', 
+    range: '#b45309', 
+    head: '#78350f', 
+    acc: '#d97706', 
+    ink: '#451a03' 
+  }
+];
+
+// Built-in Templates
+const PIE_PAL = [
+  { 
+    id: 'split-duo', 
+    name: 'Split Duo (ตารางงาน + รูปภาพ)', 
+    layout: 'split',
+    bg: '#ffffff', 
+    card: '#5c5f66', 
+    photoBg: '#5c5f66',
+    note: '#4b4e56',
+    badge: '#3b3d44',
+    title: '#374151',
+    range: '#6b7280',
+    head: '#ffffff', 
+    acc: '#cbd5e1', 
+    ink: '#f3f4f6'
+  },
+  { 
+    id: 'night', 
+    name: 'Night List (รายการเต็มหน้า)', 
+    layout: 'list',
+    bg: '#1b1f2e', 
+    card: '#2a3045', 
+    photoBg: '#2a3045',
+    note: '#3a4260',
+    badge: '#2a3045',
+    title: '#f3f4fa',
+    range: '#8fa8ff',
+    head: '#f3f4fa', 
+    acc: '#8fa8ff', 
+    ink: '#e8eaf5'
+  }
+];
+
+function pieRrPath(x, a, b, w, h, r) {
+  r = Math.max(0, Math.min(r || 0, w / 2, h / 2));
+  x.beginPath();
+  x.moveTo(a + r, b);
+  x.arcTo(a + w, b, a + w, b + h, r);
+  x.arcTo(a + w, b + h, a, b + h, r);
+  x.arcTo(a, b + h, a, b, r);
+  x.arcTo(a, b, a + w, b, r);
+  x.closePath();
+}
+
+function pieRr(x, a, b, w, h, r, fill) {
+  pieRrPath(x, a, b, w, h, r);
+  x.fillStyle = fill;
+  x.fill();
+}
+
+const pieFD = (kind, day, x, y, w, h, size, color, align, weight) => ({
+  id: pieNid(), kind, day, x, y, w, h, size, color, align: align || 'left', weight: weight || '400', font: PIE_FONTS[0]
+});
+
+function pieMakeBuiltin(p) {
+  const c = document.createElement('canvas'); c.width = c.height = PIE_S; const x = c.getContext('2d');
+  const bg = p.bg || '#ffffff';
+  const card = p.card || '#5c5f66';
+  const photoBg = p.photoBg || p.card || '#5c5f66';
+  const note = p.note || '#4b4e56';
+  const badge = p.badge || p.card || '#5c5f66';
+  const title = p.title || p.card || '#5c5f66';
+  const range = p.range || p.acc || p.card || '#5c5f66';
+  const head = p.head || '#ffffff';
+  const acc = p.acc || '#cbd5e1';
+  const ink = p.ink || '#f3f4f6';
+
+  x.fillStyle = bg; x.fillRect(0, 0, PIE_S, PIE_S);
+
+  if (p.layout === 'split') {
+    // Left Schedule Box (ตารางงาน)
+    pieRr(x, 48, 120, 560, 1070, 24, card);
+    
+    // Top Title
+    x.fillStyle = title;
+    x.font = `700 46px "${PIE_FONTS[0]}",sans-serif`;
+    x.textBaseline = 'top';
+    x.textAlign = 'left';
+    x.fillText('ตารางงานประจำสัปดาห์', 48, 44);
+    
+    // Right Photo Box (รูปภาพ)
+    pieRr(x, 640, 120, 560, 1070, 24, photoBg);
+    
+    const fields = [
+      pieFD('range', null, 48, 92, 560, 28, 20, range, 'left', '600')
+    ];
+    
+    const rowH = (1070 - 36 - 6 * 10) / 7; // ~138px
+    for (let i = 0; i < 7; i++) {
+      const cy = 138 + i * (rowH + 10);
+      pieRr(x, 64, cy, 528, rowH, 16, note);
+      pieRr(x, 76, cy + 12, 120, rowH - 24, 12, badge);
+      
+      fields.push(
+        pieFD('dayname', i, 76, cy + 20, 120, 32, 26, head, 'center', '700'),
+        pieFD('date', i, 76, cy + 68, 120, 28, 20, acc, 'center', '600'),
+        pieFD('body', i, 208, cy + 14, 372, rowH - 28, 22, ink, 'left', '400')
+      );
+    }
+    
+    const photo = p.photo ? JSON.parse(JSON.stringify(p.photo)) : {
+      x: 640, y: 120, w: 560, h: 1070, r: 24,
+      rotate: 0, scale: 1.0, offsetX: 0, offsetY: 0, img: null
+    };
+    
+    return {
+      id: p.id,
+      name: p.name,
+      layout: 'split',
+      builtin: p.builtin ?? false,
+      theme: { bg, card, photoBg, note, badge, title, range, head, acc, ink },
+      photo,
+      bg: c.toDataURL('image/jpeg', .92),
+      fields
+    };
+  } else {
+    // Night List
+    x.fillStyle = head; x.font = `700 76px "${PIE_FONTS[0]}",sans-serif`; x.textBaseline = 'top'; x.fillText('Weekly Planner', 48, 56);
+    x.fillStyle = acc; x.fillRect(48, 160, 120, 8);
+    const fields = [pieFD('range', null, 560, 76, 640, 60, 38, range, 'right', '600')];
+    const h = (1000 - 72) / 7;
+    for (let i = 0; i < 7; i++) {
+      const cy = 200 + i * (h + 12);
+      pieRr(x, 48, cy, PIE_S - 96, h, 20, card); pieRr(x, 48, cy, 200, h, 20, note);
+      fields.push(
+        pieFD('dayname', i, 64, cy + 22, 168, 50, 32, head, 'center', '700'),
+        pieFD('date', i, 64, cy + 76, 168, 38, 24, acc, 'center', '600'),
+        pieFD('body', i, 278, cy + 14, PIE_S - 96 - 250, h - 28, 26, ink, 'left', '400')
+      );
+    }
+    return {
+      id: p.id,
+      name: p.name,
+      layout: 'list',
+      builtin: p.builtin ?? false,
+      theme: { bg, card, photoBg, note, badge, title, range, head, acc, ink },
+      photo: null,
+      bg: c.toDataURL('image/jpeg', .92),
+      fields
+    };
+  }
+}
+
+let pieBuiltins = [];
+let pieCustom = [];
+function pieAllTemplates() { return [...pieBuiltins, ...pieCustom]; }
+
+function pieLoadStorage() {
+  try {
+    const cloudTpls = Storage.get('customTemplates') || [];
+    let localTpls = [];
+    try {
+      localTpls = JSON.parse(localStorage.getItem('pie.custom') || '[]');
+    } catch(e){}
+
+    const map = new Map();
+    cloudTpls.forEach(t => map.set(t.id, t));
+    localTpls.forEach(t => {
+      if (!map.has(t.id)) map.set(t.id, t);
+    });
+    pieCustom = Array.from(map.values());
+  } catch(e) {
+    console.warn('pieLoadStorage error:', e);
+    pieCustom = [];
+  }
+}
+
+function piePersist() {
+  try {
+    Storage.set('customTemplates', pieCustom);
+    try {
+      localStorage.setItem('pie.custom', JSON.stringify(pieCustom));
+    } catch(err){}
+    return true;
+  } catch(e) {
+    showToast('บันทึก Template ไม่สำเร็จ: ' + e.message, 'error');
+    return false;
+  }
+}
+
+// Rendering & Word Wrapping
+const pieImgCache = {};
+function pieLoadImg(src) {
+  if (!src) return Promise.resolve(null);
+  return pieImgCache[src] || (pieImgCache[src] = new Promise(r => {
+    const i = new Image(); i.onload = () => r(i); i.onerror = () => r(null); i.src = src;
+  }));
+}
+
+const pieSeg = (typeof Intl !== 'undefined' && Intl.Segmenter) ? new Intl.Segmenter('th', { granularity: 'word' }) : null;
+function pieWrap(x, text, w) {
+  const out = [];
+  for (const p of String(text).split('\n')) {
+    const parts = pieSeg ? [...pieSeg.segment(p)].map(s => s.segment) : [...p];
+    let line = '';
+    for (const s of parts) {
+      const t = line + s;
+      if (line && x.measureText(t).width > w) {
+        out.push(line.trimEnd()); line = s.trimStart();
+      } else line = t;
+    }
+    out.push(line.trimEnd());
+  }
+  return out;
+}
+
+function pieDrawText(x, f, text) {
+  if (!text) return;
+  x.save(); x.beginPath(); x.rect(f.x - 4, f.y - 12, f.w + 8, f.h + 24); x.clip();
+  let sz = f.size, lines;
+  for (;;) {
+    x.font = `${f.weight} ${sz}px "${f.font || PIE_FONTS[0]}",sans-serif`;
+    lines = pieWrap(x, text, f.w);
+    if (lines.length * sz * 1.35 <= f.h || sz <= 10) break;
+    sz--;
+  }
+  x.fillStyle = f.color; x.textBaseline = 'top'; x.textAlign = f.align;
+  const px = f.align === 'center' ? f.x + f.w / 2 : f.align === 'right' ? f.x + f.w : f.x;
+  lines.forEach((l, i) => x.fillText(l, px, f.y + i * sz * 1.35));
+  x.restore();
+}
+
+const pieFieldText = (f, d) => {
+  if (!d) return '';
+  if (f.kind === 'range') return d.range || '';
+  const day = d.days && d.days[f.day];
+  if (!day) return '';
+  if (f.kind === 'dayname') return day.dayname || day.name || '';
+  return day[f.kind] || '';
+};
+
+async function pieRender(cv, t, data, after) {
+  if (!cv || !t) return;
+  if (cv.width !== PIE_S) cv.width = cv.height = PIE_S;
+  const x = cv.getContext('2d');
+  x.fillStyle = (t.theme && t.theme.bg) || '#ffffff';
+  x.fillRect(0, 0, PIE_S, PIE_S);
+  
+  const im = await pieLoadImg(t.bg);
+  if (im) x.drawImage(im, 0, 0, PIE_S, PIE_S);
+
+  // Draw Photo Frame & Artwork if present
+  if (t.photo) {
+    const ph = t.photo;
+    x.save();
+    pieRrPath(x, ph.x, ph.y, ph.w, ph.h, ph.r || 0);
+    x.clip();
+    
+    // Background fill of photo box
+    x.fillStyle = (t.theme && t.theme.photoBg) || (t.theme && t.theme.card) || '#5c5f66';
+    x.fillRect(ph.x, ph.y, ph.w, ph.h);
+    
+    if (ph.img) {
+      const pImg = await pieLoadImg(ph.img);
+      if (pImg) {
+        x.save();
+        const cx = ph.x + ph.w / 2 + (ph.offsetX || 0);
+        const cy = ph.y + ph.h / 2 + (ph.offsetY || 0);
+        x.translate(cx, cy);
+        x.rotate(((ph.rotate || 0) * Math.PI) / 180);
+        const scale = ph.scale || 1.0;
+        x.scale(scale, scale);
+        
+        // Calculate aspect ratio fill
+        const aspect = pImg.width / pImg.height;
+        const boxAspect = ph.w / ph.h;
+        let dw, dh;
+        if (aspect > boxAspect) {
+          dh = ph.h;
+          dw = ph.h * aspect;
+        } else {
+          dw = ph.w;
+          dh = ph.w / aspect;
+        }
+        x.drawImage(pImg, -dw / 2, -dh / 2, dw, dh);
+        x.restore();
+      }
+    } else {
+      // Photo Placeholder with Camera Icon & Thai Guide
+      x.fillStyle = 'rgba(255,255,255,0.08)';
+      x.fillRect(ph.x, ph.y, ph.w, ph.h);
+      x.fillStyle = (t.theme && t.theme.head) || '#ffffff';
+      x.textAlign = 'center';
+      x.textBaseline = 'middle';
+      x.font = '64px sans-serif';
+      x.fillText('📷', ph.x + ph.w / 2, ph.y + ph.h / 2 - 40);
+      x.font = `700 28px "${PIE_FONTS[0]}",sans-serif`;
+      x.fillText('พื้นที่ใส่รูปภาพ / อาร์ตเวิร์ก', ph.x + ph.w / 2, ph.y + ph.h / 2 + 30);
+      x.font = `20px "${PIE_FONTS[0]}",sans-serif`;
+      x.fillStyle = 'rgba(255,255,255,0.7)';
+      x.fillText('(เลือกรูป, หมุน rotate, ซูม หรือเลื่อนตำแหน่งได้)', ph.x + ph.w / 2, ph.y + ph.h / 2 + 70);
+    }
+    x.restore();
+    
+    // Sleek border around photo box
+    x.save();
+    x.strokeStyle = 'rgba(255,255,255,0.12)';
+    x.lineWidth = 2;
+    pieRrPath(x, ph.x, ph.y, ph.w, ph.h, ph.r || 0);
+    x.stroke();
+    x.restore();
+  }
+
+  // Text fields
+  for (const f of (t.fields || [])) {
+    pieDrawText(x, f, pieFieldText(f, data));
+  }
+  
+  if (after) after(x);
+}
+
+function pieFmtDate(d, f, be) {
+  const y = d.getFullYear() + (be ? 543 : 0), n = d.getDate();
+  return f === 'dm' ? `${n} ${PIE_MS[d.getMonth()]}` : f === 'dM' ? `${n} ${PIE_MF[d.getMonth()]}` : f === 'num' ? `${pieP2(n)}/${pieP2(d.getMonth() + 1)}/${y}` : `${n} ${PIE_MF[d.getMonth()]} ${y}`;
+}
+
+function pieWeekData(start, o, bodies) {
+  const days = [];
+  for (let i = 0; i < 7; i++) {
+    const d = pieAddD(start, i);
+    const dayStr = (o.nfmt === 'full' ? PIE_DF : o.nfmt === 'short' ? PIE_DS : PIE_DE)[d.getDay()];
+    days.push({ name: dayStr, dayname: dayStr, date: pieFmtDate(d, o.dfmt, o.be), body: (bodies || [])[i] || '' });
+  }
+  const a = start, b = pieAddD(start, 6);
+  const ya = a.getFullYear() + (o.be ? 543 : 0), yb = b.getFullYear() + (o.be ? 543 : 0);
+  let range;
+  if (ya !== yb) range = `${a.getDate()} ${PIE_MS[a.getMonth()]} ${ya} – ${b.getDate()} ${PIE_MS[b.getMonth()]} ${yb}`;
+  else if (a.getMonth() === b.getMonth()) range = `${a.getDate()} – ${b.getDate()} ${PIE_MS[b.getMonth()]} ${yb}`;
+  else range = `${a.getDate()} ${PIE_MS[a.getMonth()]} – ${b.getDate()} ${PIE_MS[b.getMonth()]} ${yb}`;
+  return { days, range };
+}
+
+const pieDefOpt = { dfmt: 'dm', nfmt: 'full', be: true };
+
+// Navigation inside Planner Image Editor
+let pieNavHistory = [{ view: 'gallery', crumb: '', data: null }];
+let pieNavIdx = 0;
+let pieCur = null;
+let pieEd = null;
+let pieInitialEdState = null;
+
+function pieUpdateNavButtons() {
+  const bBack = document.getElementById('pieNavBackBtn'), bFwd = document.getElementById('pieNavFwdBtn');
+  if (bBack) bBack.disabled = (pieNavIdx <= 0);
+  if (bFwd) bFwd.disabled = (pieNavIdx >= pieNavHistory.length - 1);
+}
+
+function pieNavGo(v, crumb, push = true, data = null) {
+  ['gallery', 'fill', 'editor'].forEach(n => {
+    const el = document.getElementById('pie-v-' + n);
+    if (el) {
+      if (n === v) {
+        el.classList.remove('hide');
+        el.style.display = 'block';
+      } else {
+        el.classList.add('hide');
+        el.style.display = 'none';
+      }
+    }
+  });
+  const cEl = document.getElementById('pieCrumb');
+  if (cEl) {
+    cEl.innerHTML = crumb ? `<span style="opacity:0.6"> / </span><span style="font-weight:700">${crumb}</span>` : '';
+  }
+  if (push) {
+    pieNavHistory = pieNavHistory.slice(0, pieNavIdx + 1);
+    pieNavHistory.push({ view: v, crumb: crumb || '', data: data || (v === 'fill' ? pieCur : v === 'editor' ? pieEd : null) });
+    pieNavIdx++;
+  }
+  pieUpdateNavButtons();
+}
+
+function pieNavBack() {
+  if (pieNavIdx > 0) {
+    pieNavIdx--;
+    const step = pieNavHistory[pieNavIdx];
+    pieApplyNavStep(step);
+  }
+}
+
+function pieNavForward() {
+  if (pieNavIdx < pieNavHistory.length - 1) {
+    pieNavIdx++;
+    const step = pieNavHistory[pieNavIdx];
+    pieApplyNavStep(step);
+  }
+}
+
+function pieApplyNavStep(step) {
+  if (!step) return;
+  if (step.view === 'gallery') {
+    pieBuildGallery();
+    pieNavGo('gallery', '', false);
+  } else if (step.view === 'fill') {
+    if (step.data) pieOpenFill(step.data, false);
+    else { pieBuildGallery(); pieNavGo('gallery', '', false); }
+  } else if (step.view === 'editor') {
+    if (step.data) pieOpenEditor(step.data, !step.data.builtin, false);
+    else { pieBuildGallery(); pieNavGo('gallery', '', false); }
+  }
+  pieUpdateNavButtons();
+}
+
+const pieGo = (v, crumb, data = null) => pieNavGo(v, crumb, true, data);
+
+// Gallery Builder
+function pieBuildGallery() {
+  const g = document.getElementById('pie-gal');
+  if (!g) return;
+  g.innerHTML = '';
+  const sd = pieWeekData(pieMonday(new Date()), pieDefOpt, ['ตารางงาน 1\nประชุมทีม', 'ตารางงาน 2', 'ตารางงาน 3', '', 'ตารางงาน 5', 'ตารางงาน 6', 'พักผ่อน']);
+  
+  for (const t of pieAllTemplates()) {
+    const c = document.createElement('div'); c.className = 'pie-card';
+    const cv = document.createElement('canvas'); cv.width = cv.height = PIE_S;
+    c.appendChild(cv);
+    const inn = document.createElement('div'); inn.className = 'in';
+    const nm = document.createElement('div'); nm.className = 'nm';
+    
+    let tagHtml = '';
+    if (t.builtin) {
+      tagHtml = `<span style="font-size:11px;font-weight:600;padding:2px 6px;border-radius:10px;background:var(--bg3);color:var(--text3);margin-left:6px;vertical-align:middle;">ระบบ</span>`;
+    } else {
+      const myName = (typeof getMyName === 'function' ? getMyName() : '') || 'ราคุ';
+      const isMine = t.author && (t.author === myName);
+      const authorLabel = t.author ? (isMine ? 'ของฉัน' : `โดย ${t.author}`) : 'แชร์ในทีม';
+      const tagBg = isMine ? 'rgba(255,92,154,0.15)' : 'rgba(20,184,166,0.15)';
+      const tagColor = isMine ? 'var(--accent)' : 'var(--main-ch)';
+      tagHtml = `<span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;background:${tagBg};color:${tagColor};margin-left:6px;vertical-align:middle;">✨ ${esc(authorLabel)}</span>`;
+    }
+    nm.innerHTML = `<span>${esc(t.name)}</span>${tagHtml}`;
+
+    const r = document.createElement('div');
+    r.style.display = 'flex'; r.style.gap = '6px'; r.style.flexWrap = 'wrap';
+    inn.append(nm, r);
+    
+    const btnUse = document.createElement('button'); btnUse.className = 'btn btn-primary btn-sm'; btnUse.textContent = 'ใช้ Template นี้';
+    btnUse.onclick = () => pieOpenFill(t);
+    

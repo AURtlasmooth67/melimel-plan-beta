@@ -1,0 +1,116 @@
+﻿
+            <!-- 7 Days Input Box -->
+            <div id="pie-days"></div>
+
+            <div style="margin-top:14px">
+              <button class="btn btn-secondary btn-sm" id="pie-clearDays" style="width:100%;color:var(--danger)">🗑️ ล้างข้อความทั้งหมด</button>
+            </div>
+          </div>
+
+          <!-- Preview Stage -->
+          <div class="pie-stage">
+            <canvas id="pie-pcv" width="1248" height="1248"></canvas>
+            <div style="display:flex;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap">
+              <button class="btn btn-primary" id="pie-expPng">📥 Export PNG</button>
+              <button class="btn btn-secondary" id="pie-expJpg">Export JPG</button>
+              <button class="btn btn-secondary" id="pie-expShare" style="display:none;font-weight:700">📤 แชร์ / บันทึกรูป</button>
+            </div>
+            <p style="text-align:center;font-size:var(--fs-xs);color:var(--text3);margin-top:8px">ความละเอียดไฟล์คมชัดสูง 1248×1248 px</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- View 3: Template Editor View -->
+      <section id="pie-v-editor" class="hide">
+        <div class="pie-two">
+          <div class="pie-stage">
+            <div class="canvas-top-bar" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+              <div style="display:flex;gap:6px;align-items:center">
+                <button class="btn btn-secondary btn-sm" id="pieBtnUndoStage" title="ย้อนกลับ (Ctrl+Z)" style="font-weight:700">↶ ย้อนกลับ</button>
+                <button class="btn btn-secondary btn-sm" id="pieBtnRedoStage" title="ทำซ้ำ (Ctrl+Y)" style="font-weight:700">↷ ทำซ้ำ</button>
+                <button class="btn btn-secondary btn-sm" id="pieBtnResetEditor" title="คืนค่าเดิมทั้งหมด">↺ คืนค่า</button>
+              </div>
+              <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+                <!-- Mode Switcher: Select Tool vs Pan Tool -->
+                <div style="display:flex;gap:2px;align-items:center;background:var(--bg3);padding:2px 4px;border-radius:var(--radius-sm);border:1px solid var(--border)">
+                  <button class="btn btn-primary btn-sm" id="pieToolSelect" title="โหมดเลือกและแก้ไขกล่อง (Spacebar สลับ)" style="padding:4px 8px;font-size:var(--fs-xs)">↖️ เลือก</button>
+                  <button class="btn btn-secondary btn-sm" id="pieToolPan" title="โหมดเลื่อนดูภาพ (Spacebar + ลาก)" style="padding:4px 8px;font-size:var(--fs-xs)">✋ เลื่อนดู</button>
+                </div>
+                <!-- Zoom Controls -->
+                <div style="display:flex;gap:2px;align-items:center;background:var(--bg3);padding:2px 4px;border-radius:var(--radius-sm);border:1px solid var(--border)">
+                  <button class="btn btn-secondary btn-sm" id="pieBtnZoomOut" title="ซูมออก (Ctrl + -)" style="padding:4px 8px;font-weight:700">🔍−</button>
+                  <button class="btn btn-secondary btn-sm" id="pieBtnZoomVal" title="คลิกเพื่อรีเซ็ตขนาดพอดีจอ" style="padding:4px 8px;font-size:var(--fs-xs);min-width:50px;text-align:center">Fit</button>
+                  <button class="btn btn-secondary btn-sm" id="pieBtnZoomIn" title="ซูมเข้า (Ctrl + +)" style="padding:4px 8px;font-weight:700">🔍+</button>
+                  <button class="btn btn-secondary btn-sm" id="pieBtnZoomFit" title="พอดีหน้าจอ" style="padding:4px 8px;font-size:var(--fs-xs)">Fit</button>
+                </div>
+                <button class="btn btn-primary btn-sm" id="pieBtnGoFill" title="บันทึกและไปหน้ากรอกงาน">ไปหน้ากรอกงาน →</button>
+              </div>
+            </div>
+
+            <!-- Zoom & Pan Viewport Wrapper -->
+            <div class="pie-viewport" id="pieEcvWrap">
+              <div id="pieEcvCenter" style="display:inline-block;min-width:100%;text-align:center;line-height:0;position:relative">
+                <canvas id="pie-ecv" width="1248" height="1248" style="touch-action:none;cursor:crosshair;margin:0 auto;display:inline-block;box-shadow:var(--shadow);border-radius:6px;vertical-align:top"></canvas>
+              </div>
+            </div>
+            <p style="text-align:center;font-size:var(--fs-xs);color:var(--text3);margin-top:8px">ซูม: 🔍− / 🔍+ หรือ Ctrl+Scroll | Spacebar + ลากเพื่อเลื่อนดู | ลากครอบ (Marquee) | ↶ Ctrl+Z | ↷ Ctrl+Y</p>
+          </div>
+
+          <!-- Editor Properties Sidebar -->
+          <div class="pie-side">
+            <label style="display:block;font-size:var(--fs-xs);font-weight:600;color:var(--text3);margin-bottom:4px">ชื่อ Template</label>
+            <input id="pie-tname" style="width:100%;padding:8px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text);margin-bottom:10px">
+
+            <label style="display:block;font-size:var(--fs-xs);font-weight:600;color:var(--text3);margin-bottom:4px">รูปพื้นหลัง Template (1248×1248)</label>
+            <input type="file" id="pie-bgfile" accept="image/*" style="width:100%;padding:6px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text);margin-bottom:6px">
+            <p style="font-size:var(--fs-xs);color:var(--text3);margin-bottom:10px">หรือลากรูปมาวาง / กด Ctrl+V เพื่อวางรูป ระบบจะตรวจจับช่องตารางให้อัตโนมัติ</p>
+
+            <button class="btn btn-primary btn-sm" id="pie-autodet" style="width:100%;margin-bottom:14px">✨ ตรวจจับช่องตารางอัตโนมัติ</button>
+
+            <label style="display:block;font-size:var(--fs-xs);font-weight:700;color:var(--text2);margin-bottom:6px">เพิ่มช่องข้อความ</label>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+              <button class="btn btn-secondary btn-sm" data-pieadd="dayname">ชื่อวัน</button>
+              <button class="btn btn-secondary btn-sm" data-pieadd="date">วันที่</button>
+              <button class="btn btn-secondary btn-sm" data-pieadd="body">รายละเอียดงาน</button>
+              <button class="btn btn-secondary btn-sm" data-pieadd="range">ช่วงสัปดาห์</button>
+            </div>
+
+            <div style="display:flex;gap:6px;align-items:center;margin-bottom:12px">
+              <select id="pie-addall" style="flex:1;padding:6px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text)">
+                <option value="dayname">ชื่อวัน</option>
+                <option value="date">วันที่</option>
+                <option value="body">รายละเอียดงาน</option>
+              </select>
+              <button class="btn btn-secondary btn-sm" id="pie-addall7">เพิ่มครบ 7 วัน</button>
+            </div>
+
+            <label style="display:block;font-size:var(--fs-xs);font-weight:700;color:var(--text2);margin-bottom:6px">เลือกหลายช่องพร้อมกัน (Edit All)</label>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
+              <button class="btn btn-secondary btn-sm" id="pieBtnSelAll" style="font-size:var(--fs-xs)">เลือกทุกช่อง (Ctrl+A)</button>
+              <button class="btn btn-secondary btn-sm" id="pieBtnSelDay" style="font-size:var(--fs-xs)">เฉพาะชื่อวัน</button>
+              <button class="btn btn-secondary btn-sm" id="pieBtnSelDate" style="font-size:var(--fs-xs)">เฉพาะวันที่</button>
+              <button class="btn btn-secondary btn-sm" id="pieBtnSelBody" style="font-size:var(--fs-xs)">เฉพาะงาน</button>
+            </div>
+
+            <hr style="border:0;border-top:1px solid var(--border);margin:14px 0">
+
+            <!-- Dynamic Properties Panel -->
+            <div id="pie-props"><p style="font-size:var(--fs-sm);color:var(--text3)">ยังไม่ได้เลือกช่อง คลิกบนกล่อง หรือลากครอบเพื่อปรับแต่ง</p></div>
+
+            <div style="display:flex;gap:8px;margin-top:16px">
+              <button class="btn btn-primary" id="pie-esave" style="flex:1">💾 บันทึก Template</button>
+              <button class="btn btn-secondary" id="pie-ecancel">ยกเลิก</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="page" id="page-deadline" role="main">
+    <div class="section-header">
+      <h2>⏳ งานใหญ่</h2>
+      <button class="btn btn-primary btn-sm" id="btn-add-dl">+ เพิ่มงานใหญ่</button>
+    </div>
+    <div id="dl-list"></div>
+  </div>

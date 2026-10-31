@@ -1,0 +1,329 @@
+﻿<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MELiMEL FRUITY♡ - สร้างภาพแพลนเนอร์ 1248×1248</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+</head>
+<body>
+
+  <!-- Top Standalone Header Bar -->
+  <header class="standalone-header">
+    <div class="standalone-brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+      </svg>
+      <h1>MELiMEL FRUITY♡</h1>
+      <span class="badge-tag">1248×1248 HD Generator</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="btn btn-secondary btn-sm" id="btn-theme-toggle" title="สลับธีม สว่าง / มืด">🌙 ธีม</button>
+    </div>
+  </header>
+
+  <!-- Main Planner Image Editor Markup -->
+<div class="page active" id="page-image-editor" role="main">
+    <div class="pie-wrap">
+      <!-- Top Navigation Header for Planner Image Editor -->
+      <div class="pie-nav-header">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <div style="display:flex;gap:4px;align-items:center">
+            <button class="btn btn-secondary btn-sm" id="pieNavBackBtn" title="ย้อนกลับ (Alt + ←)" style="padding:6px 10px;font-weight:700">←</button>
+            <button class="btn btn-secondary btn-sm" id="pieNavFwdBtn" title="ไปข้างหน้า (Alt + →)" style="padding:6px 10px;font-weight:700">→</button>
+          </div>
+          <h2 style="margin:0;font-size:var(--fs-lg);font-weight:800;cursor:pointer" id="pieHomeBtn">🖼️ สร้างภาพแพลนเนอร์</h2>
+          <span class="crumb" id="pieCrumb" style="font-size:var(--fs-sm);color:var(--text3)"></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-secondary btn-sm" id="pieBtnGallery">📚 เลือก Template</button>
+          <button class="btn btn-secondary btn-sm" id="pieBtnFill">📝 กรอกข้อมูล</button>
+          <button class="btn btn-secondary btn-sm" id="pieBtnEditor">🎨 ออกแบบ</button>
+        </div>
+      </div>
+
+      <!-- View 1: Gallery View -->
+      <section id="pie-v-gallery">
+        <div class="section-header" style="margin-bottom:12px">
+          <h3>เลือก Template สำหรับสร้างภาพ</h3>
+          <p style="font-size:var(--fs-sm);color:var(--text3);margin-top:2px">เลือกแบบที่ต้องการ แล้วระบบจะดึงข้อมูลตารางงาน 7 วันของสมาชิกแต่ละคนมาวางให้โดยอัตโนมัติ</p>
+        </div>
+        <div class="pie-grid" id="pie-gal"></div>
+      </section>
+
+      <!-- View 2: Fill Data View -->
+      <section id="pie-v-fill" class="hide">
+        <div class="pie-two pie-fillwrap">
+          <div class="pie-side">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:12px;flex-wrap:wrap">
+              <b id="pie-fname" style="font-size:var(--fs-md);white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></b>
+              <div style="display:flex;gap:6px;flex-wrap:wrap">
+                <button class="btn btn-primary btn-sm" id="pie-fsave" title="บันทึกการเปลี่ยนแปลงของ Template นี้" style="padding:5px 10px;font-size:var(--fs-xs)">💾 บันทึก Template</button>
+                <button class="btn btn-secondary btn-sm" id="pie-fdup" title="ทำสำเนา Template นี้เป็นฉบับใหม่" style="padding:5px 10px;font-size:var(--fs-xs)">📑 ทำสำเนา</button>
+                <button class="btn btn-secondary btn-sm" id="pie-fedit" title="ไปหน้าแก้ไขช่องข้อความ Template นี้" style="padding:5px 10px;font-size:var(--fs-xs)">✏️ แก้ไขแบบ</button>
+                <button class="btn btn-secondary btn-sm" id="pie-fback" title="ย้อนกลับไปหน้าเลือก Template" style="padding:5px 10px;font-size:var(--fs-xs)">← เปลี่ยนแบบ</button>
+              </div>
+            </div>
+
+            <!-- Quick Sync from Member Weekly Outline -->
+            <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;margin-bottom:14px">
+              <label style="font-size:var(--fs-xs);font-weight:700;color:var(--accent);display:block;margin-bottom:6px">⚡ ดึงข้อมูลจากโครงสัปดาห์ของสมาชิก:</label>
+              <div class="chip-group" id="pie-member-chips" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+            </div>
+
+            <!-- Quick Ready Songs for Release -->
+            <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;margin-bottom:14px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <label style="font-size:var(--fs-xs);font-weight:700;color:var(--accent);margin:0">✨ คลิปที่พร้อมลง (แตะเพื่อใส่ลงวัน):</label>
+                <span style="font-size:11px;color:var(--text3);" id="pie-ready-count">0 คลิป</span>
+              </div>
+              <div class="chip-group" id="pie-ready-chips" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+            </div>
+
+            <!-- Theme Color Selector Section -->
+            <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;margin-bottom:14px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <label style="font-size:var(--fs-xs);font-weight:700;color:var(--text2);margin:0">🎨 ธีมสี (Theme Colors):</label>
+                <button class="btn btn-secondary btn-sm" id="pie-toggle-colors" style="padding:2px 8px;font-size:11px">⚙️ ปรับสีเอง</button>
+              </div>
+              <div class="pie-theme-palette" id="pie-theme-palette"></div>
+              
+              <!-- Expandable Custom Color Pickers -->
+              <div id="pie-custom-colors" style="display:none;margin-top:8px;border-top:1px solid var(--border);padding-top:10px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                  <span style="font-size:11px;font-weight:700;color:var(--text3)">ปรับแต่งสีทุกจุด (Custom Colors):</span>
+                  <button class="btn btn-secondary btn-sm" id="pie-reset-colors" style="padding:2px 8px;font-size:11px">↺ คืนค่าสีธีม</button>
+                </div>
+
+                <div style="font-size:11px;font-weight:700;color:var(--text2);margin:8px 0 4px">🖼️ พื้นหลังและกล่องหลัก</div>
+                <div class="pie-color-grid">
+                  <div class="pie-color-item"><label>พื้นหลังรวม:</label><input type="color" id="pie-col-bg" value="#ffffff"></div>
+                  <div class="pie-color-item"><label>กล่องตารางงาน:</label><input type="color" id="pie-col-card" value="#5c5f66"></div>
+                  <div class="pie-color-item"><label>กล่องใส่รูปภาพ:</label><input type="color" id="pie-col-photoBg" value="#5c5f66"></div>
+                </div>
+
+                <div style="font-size:11px;font-weight:700;color:var(--text2);margin:10px 0 4px">📋 การ์ดตารางและป้ายวัน</div>
+                <div class="pie-color-grid">
+                  <div class="pie-color-item"><label>การ์ดแต่ละวัน:</label><input type="color" id="pie-col-note" value="#4b4e56"></div>
+                  <div class="pie-color-item"><label>ป้ายชื่อวัน:</label><input type="color" id="pie-col-badge" value="#3b3d44"></div>
+                  <div class="pie-color-item"><label>หัวข้อตาราง:</label><input type="color" id="pie-col-title" value="#374151"></div>
+                  <div class="pie-color-item"><label>ช่วงสัปดาห์:</label><input type="color" id="pie-col-range" value="#6b7280"></div>
+                </div>
+
+                <div style="font-size:11px;font-weight:700;color:var(--text2);margin:10px 0 4px">✍️ ตัวหนังสือ & ข้อความ</div>
+                <div class="pie-color-grid">
+                  <div class="pie-color-item"><label>ชื่อวัน (จ.-อา.):</label><input type="color" id="pie-col-head" value="#ffffff"></div>
+                  <div class="pie-color-item"><label>วันที่ (เช่น 9 ต.ค.):</label><input type="color" id="pie-col-acc" value="#cbd5e1"></div>
+                  <div class="pie-color-item"><label>รายละเอียดงาน:</label><input type="color" id="pie-col-ink" value="#f3f4f6"></div>
+                </div>
+
+                <div style="margin-top:12px;display:flex;justify-content:flex-end;">
+                  <button type="button" class="btn btn-secondary btn-sm" id="pie-save-as-custom-tpl" style="font-size:11px;padding:4px 10px;">💾 บันทึกการแต่งสีนี้เป็น Template ทีม</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Photo / Artwork Controls Section -->
+            <div class="pie-photo-box" id="pie-photo-section">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                <label style="font-size:var(--fs-xs);font-weight:700;color:var(--text);margin:0">🖼️ ใส่รูปภาพ & หมุนรูป (Photo & Rotate)</label>
+                <div style="display:flex;gap:4px">
+                  <button class="btn btn-secondary btn-sm" id="pie-photo-reset" style="padding:2px 8px;font-size:11px">↺ คืนค่ารูป</button>
+                  <button class="btn btn-secondary btn-sm" id="pie-photo-clear" style="padding:2px 8px;font-size:11px;color:var(--danger)">🗑️ ลบรูป</button>
+                </div>
+              </div>
+              
+              <div style="display:flex;gap:6px;align-items:center;margin-bottom:10px">
+                <input type="file" id="pie-photo-file" accept="image/*" style="display:none">
+                <button class="btn btn-primary btn-sm" id="pie-photo-choose" style="flex:1">📁 เลือกรูปภาพ</button>
+                <span style="font-size:var(--fs-xs);color:var(--text3)">(หรือกด Ctrl+V แปะรูป)</span>
+              </div>
+              
+              <!-- Rotation Controls -->
+              <div class="pie-ctrl-row">
+                <label>🔄 หมุนองศา:</label>
+                <input type="range" id="pie-photo-rot" min="-180" max="180" value="0">
+                <span class="pie-ctrl-val" id="pie-photo-rot-val">0°</span>
+              </div>
+              <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px">
+                <button class="btn btn-secondary btn-sm" id="pie-rot-m90" style="padding:3px 6px;font-size:11px">↺ -90°</button>
+                <button class="btn btn-secondary btn-sm" id="pie-rot-m15" style="padding:3px 6px;font-size:11px">↺ -15°</button>
+                <button class="btn btn-secondary btn-sm" id="pie-rot-0" style="padding:3px 6px;font-size:11px;font-weight:700">0° ตั้งตรง</button>
+                <button class="btn btn-secondary btn-sm" id="pie-rot-p15" style="padding:3px 6px;font-size:11px">↻ +15°</button>
+                <button class="btn btn-secondary btn-sm" id="pie-rot-p90" style="padding:3px 6px;font-size:11px">↻ +90°</button>
+              </div>
+
+              <!-- Scale / Zoom Controls -->
+              <div class="pie-ctrl-row">
+                <label>🔍 ซูมขนาดรูป:</label>
+                <input type="range" id="pie-photo-scale" min="20" max="300" step="5" value="100">
+                <span class="pie-ctrl-val" id="pie-photo-scale-val">100%</span>
+              </div>
+
+              <!-- Offset Controls -->
+              <div class="pie-ctrl-row">
+                <label>↔️ เลื่อนแนวนอน:</label>
+                <input type="range" id="pie-photo-ox" min="-500" max="500" value="0">
+                <span class="pie-ctrl-val" id="pie-photo-ox-val">0px</span>
+              </div>
+              <div class="pie-ctrl-row">
+                <label>↕️ เลื่อนแนวตั้ง:</label>
+                <input type="range" id="pie-photo-oy" min="-500" max="500" value="0">
+                <span class="pie-ctrl-val" id="pie-photo-oy-val">0px</span>
+              </div>
+              <div class="pie-ctrl-row">
+                <label>🔘 ความโค้งขอบ:</label>
+                <input type="range" id="pie-photo-r" min="0" max="60" value="24">
+                <span class="pie-ctrl-val" id="pie-photo-r-val">24px</span>
+              </div>
+            </div>
+
+            <label style="display:block;font-size:var(--fs-xs);font-weight:600;color:var(--text3);margin-bottom:4px">วันเริ่มต้นสัปดาห์ (จันทร์)</label>
+            <div style="display:flex;gap:6px;align-items:center;margin-bottom:12px">
+              <button class="btn btn-secondary btn-sm" id="pie-prevw" title="ย้อนสัปดาห์ก่อน (‹)" style="padding:6px 10px;font-weight:700">‹ ย้อน</button>
+              <button class="btn btn-secondary btn-sm" id="pie-todayw" title="สัปดาห์ปัจจุบัน (วันนี้)" style="padding:6px 8px;font-size:var(--fs-xs)">วันนี้</button>
+              <input type="date" id="pie-start" style="flex:1;padding:8px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text)">
+              <button class="btn btn-secondary btn-sm" id="pie-nextw" title="สัปดาห์ถัดไป (›)" style="padding:6px 10px;font-weight:700">ถัดไป ›</button>
+            </div>
+
+            <div class="pie-g2" style="margin-bottom:10px">
+              <div>
+                <label style="display:block;font-size:var(--fs-xs);font-weight:600;color:var(--text3);margin-bottom:4px">รูปแบบวันที่</label>
+                <select id="pie-dfmt" style="width:100%;padding:8px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text)">
+                  <option value="dm">9 ต.ค.</option>
+                  <option value="dM">9 ตุลาคม</option>
+                  <option value="num">09/10/2569</option>
+                  <option value="full">9 ตุลาคม 2569</option>
+                </select>
+              </div>
+              <div>
+                <label style="display:block;font-size:var(--fs-xs);font-weight:600;color:var(--text3);margin-bottom:4px">ชื่อวัน</label>
+                <select id="pie-nfmt" style="width:100%;padding:8px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text)">
+                  <option value="full">จันทร์</option>
+                  <option value="short">จ.</option>
+                  <option value="en">Mon</option>
+                </select>
+              </div>
+            </div>
+
+            <label style="display:flex;gap:8px;align-items:center;font-size:var(--fs-sm);font-weight:600;margin-bottom:14px;cursor:pointer">
+              <input type="checkbox" id="pie-be" checked style="width:auto"> ใช้ปี พ.ศ. (+543)
+            </label>
+
+            <!-- 7 Days Input Box -->
+            <div id="pie-days"></div>
+
+            <div style="margin-top:14px">
+              <button class="btn btn-secondary btn-sm" id="pie-clearDays" style="width:100%;color:var(--danger)">🗑️ ล้างข้อความทั้งหมด</button>
+            </div>
+          </div>
+
+          <!-- Preview Stage -->
+          <div class="pie-stage">
+            <canvas id="pie-pcv" width="1248" height="1248"></canvas>
+            <div style="display:flex;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap">
+              <button class="btn btn-primary" id="pie-expPng">📥 Export PNG</button>
+              <button class="btn btn-secondary" id="pie-expJpg">Export JPG</button>
+              <button class="btn btn-secondary" id="pie-expShare" style="display:none;font-weight:700">📤 แชร์ / บันทึกรูป</button>
+            </div>
+            <p style="text-align:center;font-size:var(--fs-xs);color:var(--text3);margin-top:8px">ความละเอียดไฟล์คมชัดสูง 1248×1248 px</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- View 3: Template Editor View -->
+      <section id="pie-v-editor" class="hide">
+        <div class="pie-two">
+          <div class="pie-stage">
+            <div class="canvas-top-bar" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+              <div style="display:flex;gap:6px;align-items:center">
+                <button class="btn btn-secondary btn-sm" id="pieBtnUndoStage" title="ย้อนกลับ (Ctrl+Z)" style="font-weight:700">↶ ย้อนกลับ</button>
+                <button class="btn btn-secondary btn-sm" id="pieBtnRedoStage" title="ทำซ้ำ (Ctrl+Y)" style="font-weight:700">↷ ทำซ้ำ</button>
+                <button class="btn btn-secondary btn-sm" id="pieBtnResetEditor" title="คืนค่าเดิมทั้งหมด">↺ คืนค่า</button>
+              </div>
+              <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+                <!-- Mode Switcher: Select Tool vs Pan Tool -->
+                <div style="display:flex;gap:2px;align-items:center;background:var(--bg3);padding:2px 4px;border-radius:var(--radius-sm);border:1px solid var(--border)">
+                  <button class="btn btn-primary btn-sm" id="pieToolSelect" title="โหมดเลือกและแก้ไขกล่อง (Spacebar สลับ)" style="padding:4px 8px;font-size:var(--fs-xs)">↖️ เลือก</button>
+                  <button class="btn btn-secondary btn-sm" id="pieToolPan" title="โหมดเลื่อนดูภาพ (Spacebar + ลาก)" style="padding:4px 8px;font-size:var(--fs-xs)">✋ เลื่อนดู</button>
+                </div>
+                <!-- Zoom Controls -->
+                <div style="display:flex;gap:2px;align-items:center;background:var(--bg3);padding:2px 4px;border-radius:var(--radius-sm);border:1px solid var(--border)">
+                  <button class="btn btn-secondary btn-sm" id="pieBtnZoomOut" title="ซูมออก (Ctrl + -)" style="padding:4px 8px;font-weight:700">🔍−</button>
+                  <button class="btn btn-secondary btn-sm" id="pieBtnZoomVal" title="คลิกเพื่อรีเซ็ตขนาดพอดีจอ" style="padding:4px 8px;font-size:var(--fs-xs);min-width:50px;text-align:center">Fit</button>
+                  <button class="btn btn-secondary btn-sm" id="pieBtnZoomIn" title="ซูมเข้า (Ctrl + +)" style="padding:4px 8px;font-weight:700">🔍+</button>
+                  <button class="btn btn-secondary btn-sm" id="pieBtnZoomFit" title="พอดีหน้าจอ" style="padding:4px 8px;font-size:var(--fs-xs)">Fit</button>
+                </div>
+                <button class="btn btn-primary btn-sm" id="pieBtnGoFill" title="บันทึกและไปหน้ากรอกงาน">ไปหน้ากรอกงาน →</button>
+              </div>
+            </div>
+
+            <!-- Zoom & Pan Viewport Wrapper -->
+            <div class="pie-viewport" id="pieEcvWrap">
+              <div id="pieEcvCenter" style="display:inline-block;min-width:100%;text-align:center;line-height:0;position:relative">
+                <canvas id="pie-ecv" width="1248" height="1248" style="touch-action:none;cursor:crosshair;margin:0 auto;display:inline-block;box-shadow:var(--shadow);border-radius:6px;vertical-align:top"></canvas>
+              </div>
+            </div>
+            <p style="text-align:center;font-size:var(--fs-xs);color:var(--text3);margin-top:8px">ซูม: 🔍− / 🔍+ หรือ Ctrl+Scroll | Spacebar + ลากเพื่อเลื่อนดู | ลากครอบ (Marquee) | ↶ Ctrl+Z | ↷ Ctrl+Y</p>
+          </div>
+
+          <!-- Editor Properties Sidebar -->
+          <div class="pie-side">
+            <label style="display:block;font-size:var(--fs-xs);font-weight:600;color:var(--text3);margin-bottom:4px">ชื่อ Template</label>
+            <input id="pie-tname" style="width:100%;padding:8px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text);margin-bottom:10px">
+
+            <label style="display:block;font-size:var(--fs-xs);font-weight:600;color:var(--text3);margin-bottom:4px">รูปพื้นหลัง Template (1248×1248)</label>
+            <input type="file" id="pie-bgfile" accept="image/*" style="width:100%;padding:6px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text);margin-bottom:6px">
+            <p style="font-size:var(--fs-xs);color:var(--text3);margin-bottom:10px">หรือลากรูปมาวาง / กด Ctrl+V เพื่อวางรูป ระบบจะตรวจจับช่องตารางให้อัตโนมัติ</p>
+
+            <button class="btn btn-primary btn-sm" id="pie-autodet" style="width:100%;margin-bottom:14px">✨ ตรวจจับช่องตารางอัตโนมัติ</button>
+
+            <label style="display:block;font-size:var(--fs-xs);font-weight:700;color:var(--text2);margin-bottom:6px">เพิ่มช่องข้อความ</label>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+              <button class="btn btn-secondary btn-sm" data-pieadd="dayname">ชื่อวัน</button>
+              <button class="btn btn-secondary btn-sm" data-pieadd="date">วันที่</button>
+              <button class="btn btn-secondary btn-sm" data-pieadd="body">รายละเอียดงาน</button>
+              <button class="btn btn-secondary btn-sm" data-pieadd="range">ช่วงสัปดาห์</button>
+            </div>
+
+            <div style="display:flex;gap:6px;align-items:center;margin-bottom:12px">
+              <select id="pie-addall" style="flex:1;padding:6px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text)">
+                <option value="dayname">ชื่อวัน</option>
+                <option value="date">วันที่</option>
+                <option value="body">รายละเอียดงาน</option>
+              </select>
+              <button class="btn btn-secondary btn-sm" id="pie-addall7">เพิ่มครบ 7 วัน</button>
+            </div>
+
+            <label style="display:block;font-size:var(--fs-xs);font-weight:700;color:var(--text2);margin-bottom:6px">เลือกหลายช่องพร้อมกัน (Edit All)</label>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
+              <button class="btn btn-secondary btn-sm" id="pieBtnSelAll" style="font-size:var(--fs-xs)">เลือกทุกช่อง (Ctrl+A)</button>
+              <button class="btn btn-secondary btn-sm" id="pieBtnSelDay" style="font-size:var(--fs-xs)">เฉพาะชื่อวัน</button>
+              <button class="btn btn-secondary btn-sm" id="pieBtnSelDate" style="font-size:var(--fs-xs)">เฉพาะวันที่</button>
+              <button class="btn btn-secondary btn-sm" id="pieBtnSelBody" style="font-size:var(--fs-xs)">เฉพาะงาน</button>
+            </div>
+
+            <hr style="border:0;border-top:1px solid var(--border);margin:14px 0">
+
+            <!-- Dynamic Properties Panel -->
+            <div id="pie-props"><p style="font-size:var(--fs-sm);color:var(--text3)">ยังไม่ได้เลือกช่อง คลิกบนกล่อง หรือลากครอบเพื่อปรับแต่ง</p></div>
+
+            <div style="display:flex;gap:8px;margin-top:16px">
+              <button class="btn btn-primary" id="pie-esave" style="flex:1">💾 บันทึก Template</button>
+              <button class="btn btn-secondary" id="pie-ecancel">ยกเลิก</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
