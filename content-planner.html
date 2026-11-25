@@ -223,8 +223,8 @@ body::after {
   display: none !important;
 }
 .topnav-logo-img {
-  height: 40px;
-  max-height: calc(var(--nav-h) - 12px);
+  height: 44px;
+  max-height: calc(var(--nav-h) - 8px);
   width: auto;
   object-fit: contain;
   vertical-align: middle;
@@ -548,7 +548,7 @@ h4 { font-size: var(--fs-md); font-weight: 600; }
 }
 #topnav .spacer { flex: 1; }
 #btn-theme {
-  width: 40px; height: 40px; border-radius: var(--radius);
+  width: 40px; height: 44px; border-radius: var(--radius);
   background: var(--bg3); color: var(--text); font-size: 18px;
   display: flex; align-items: center; justify-content: center;
   transition: background var(--anim-fast) var(--ease);
@@ -653,7 +653,7 @@ h4 { font-size: var(--fs-md); font-weight: 600; }
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;
   padding: 10px 18px; border-radius: var(--radius); font-size: var(--fs-sm);
-  font-weight: 600; min-height: 40px; transition: all var(--anim-fast) var(--ease); white-space: nowrap;
+  font-weight: 600; min-height: 44px; transition: all var(--anim-fast) var(--ease); white-space: nowrap;
 }
 .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; }
@@ -664,8 +664,8 @@ h4 { font-size: var(--fs-md); font-weight: 600; }
 .btn-ghost:hover { background: var(--bg3); color: var(--text); }
 .btn-danger { background: var(--danger); color: #fff; }
 .btn-danger:hover { opacity: .9; }
-.btn-sm { padding: 6px 12px; font-size: var(--fs-xs); min-height: 40px; }
-.btn-icon { width: 40px; height: 40px; border-radius: var(--radius); display: inline-flex; align-items: center; justify-content: center; font-size: 18px; }
+.btn-sm { padding: 6px 12px; font-size: var(--fs-xs); min-height: 44px; }
+.btn-icon { width: 40px; height: 44px; border-radius: var(--radius); display: inline-flex; align-items: center; justify-content: center; font-size: 18px; }
 
 .ch-badge {
   display: inline-flex; align-items: center; gap: 4px;
@@ -727,7 +727,7 @@ select.inp { appearance: none; cursor: pointer; }
 }
 .modal-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
 .modal-header h3 { flex: 1; font-size: var(--fs-lg); }
-.modal-close { width: 40px; height: 40px; border-radius: var(--radius); background: var(--bg3); color: var(--text3); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.modal-close { width: 40px; height: 44px; border-radius: var(--radius); background: var(--bg3); color: var(--text3); display: flex; align-items: center; justify-content: center; font-size: 18px; }
 .modal-close:hover { background: var(--border); color: var(--text); }
 
 #toast-container {
@@ -754,7 +754,7 @@ select.inp { appearance: none; cursor: pointer; }
 .chip {
   padding: 6px 14px; border-radius: 99px; font-size: var(--fs-xs); font-weight: 700;
   background: var(--bg3); color: var(--text3); border: 1.5px solid transparent;
-  cursor: pointer; transition: all var(--anim-fast) var(--ease); min-height: 40px;
+  cursor: pointer; transition: all var(--anim-fast) var(--ease); min-height: 44px;
   display: inline-flex; align-items: center; justify-content: center;
 }
 .chip:hover { border-color: var(--border2); color: var(--text); }
@@ -806,7 +806,7 @@ select.inp { appearance: none; cursor: pointer; }
 /* Calendar */
 .cal-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
 .cal-header h3 { flex: 1; text-align: center; font-size: var(--fs-md); font-weight: 700; }
-.cal-nav { width: 40px; height: 40px; border-radius: var(--radius); background: var(--bg3); color: var(--text); font-size: 18px; display: flex; align-items: center; justify-content: center; }
+.cal-nav { width: 40px; height: 44px; border-radius: var(--radius); background: var(--bg3); color: var(--text); font-size: 18px; display: flex; align-items: center; justify-content: center; }
 .cal-nav:hover { background: var(--border); }
 
 .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
@@ -931,7 +931,7 @@ select.inp { appearance: none; cursor: pointer; }
 
 /* View toggle */
 .view-toggle { display: flex; gap: 4px; background: var(--bg3); border-radius: var(--radius); padding: 3px; }
-.vt-btn { flex: 1; padding: 6px 12px; border-radius: var(--radius-sm); font-size: var(--fs-xs); font-weight: 700; color: var(--text3); transition: all var(--anim-fast) var(--ease); min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+.vt-btn { flex: 1; padding: 6px 12px; border-radius: var(--radius-sm); font-size: var(--fs-xs); font-weight: 700; color: var(--text3); transition: all var(--anim-fast) var(--ease); min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
 .vt-btn.active { background: var(--surface); color: var(--text); box-shadow: var(--shadow-sm); }
 
 /* Warning cards */
@@ -940,7 +940,7 @@ select.inp { appearance: none; cursor: pointer; }
 .dup-warn .icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
 
 .maker-checkboxes { display: flex; flex-wrap: wrap; gap: 8px; }
-.maker-cb { display: flex; align-items: center; gap: 5px; padding: 8px 14px; border-radius: 99px; border: 1.5px solid var(--border); cursor: pointer; font-size: var(--fs-sm); font-weight: 600; transition: all var(--anim-fast) var(--ease); user-select: none; min-height: 40px; }
+.maker-cb { display: flex; align-items: center; gap: 5px; padding: 8px 14px; border-radius: 99px; border: 1.5px solid var(--border); cursor: pointer; font-size: var(--fs-sm); font-weight: 600; transition: all var(--anim-fast) var(--ease); user-select: none; min-height: 44px; }
 .maker-cb input { display: none; }
 .maker-cb.checked { color: #fff; border-color: transparent; }
 
@@ -1578,7 +1578,7 @@ select.inp { appearance: none; cursor: pointer; }
 
 <!-- TOP NAV -->
 <nav id="topnav">
-  <span class="logo"><img src="logo.png" alt="MELiMEL FRUITY" class="topnav-logo-img"></span>
+  <span class="logo"><img src="logo.png?v=2" alt="MELiMEL FRUITY" class="topnav-logo-img"></span>
   <span class="spacer"></span>
   <div id="user-profile-badge" class="user-badge" style="display:none;">
     <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
