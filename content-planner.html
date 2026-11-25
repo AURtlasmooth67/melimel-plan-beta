@@ -188,51 +188,82 @@ body::after {
   z-index: 1;
 }
 
-/* 2. EASYDONATE FLOATING CAPSULE NAVBAR */
+/* 2. EASYDONATE FLOATING SPLIT NAVBAR (STANDALONE LOGO + RIGHT CAPSULE) */
 #topnav {
   position: sticky !important;
-  top: 16px !important;
+  top: 12px !important;
   z-index: 100 !important;
-  height: 58px !important;
+  height: auto !important;
+  min-height: 58px !important;
   max-width: 1440px !important;
-  margin: 14px auto 18px !important;
+  margin: 12px auto 14px !important;
   width: calc(100% - 32px) !important;
-  background: rgba(255, 255, 255, 0.88) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 999px !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
   display: flex !important;
   align-items: center !important;
+  justify-content: space-between !important;
   gap: 12px !important;
-  padding: 0 20px !important;
-  box-shadow: 0 16px 40px -15px rgba(17, 24, 39, 0.08), 0 2px 10px rgba(255, 92, 154, 0.08) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  pointer-events: none !important;
 }
 [data-theme="dark"] #topnav {
-  background: rgba(22, 25, 40, 0.9) !important;
-  box-shadow: 0 16px 40px -15px rgba(0, 0, 0, 0.6), 0 2px 10px rgba(255, 92, 154, 0.15) !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 #topnav .logo {
-  display: flex !important;
+  display: inline-flex !important;
   align-items: center !important;
   background: none !important;
   padding: 0 !important;
+  pointer-events: auto !important;
 }
 #topnav .logo::before {
   display: none !important;
 }
 .topnav-logo-img {
-  height: 44px;
-  max-height: calc(var(--nav-h) - 8px);
+  height: 68px;
   width: auto;
   object-fit: contain;
   vertical-align: middle;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.12));
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.35)) drop-shadow(0 0 14px rgba(255, 92, 154, 0.25));
   transition: transform var(--anim-fast) var(--ease);
 }
 .topnav-logo-img:hover {
   transform: scale(1.05);
+}
+
+.topnav-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid var(--border);
+  box-shadow: 0 16px 40px -15px rgba(17, 24, 39, 0.08), 0 2px 10px rgba(255, 92, 154, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  pointer-events: auto;
+  flex-shrink: 0;
+}
+[data-theme="dark"] .topnav-actions {
+  background: rgba(22, 25, 40, 0.9);
+  box-shadow: 0 16px 40px -15px rgba(0, 0, 0, 0.6), 0 2px 10px rgba(255, 92, 154, 0.15);
+}
+@media (max-width: 640px) {
+  .topnav-logo-img {
+    height: 46px;
+  }
+  .topnav-actions {
+    gap: 6px;
+    padding: 4px 8px;
+  }
 }
 
 #btn-theme, .btn-icon {
@@ -1580,17 +1611,19 @@ select.inp { appearance: none; cursor: pointer; }
 <nav id="topnav">
   <span class="logo"><img src="logo.png?v=2" alt="MELiMEL FRUITY" class="topnav-logo-img"></span>
   <span class="spacer"></span>
-  <div id="user-profile-badge" class="user-badge" style="display:none;">
-    <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
-    <span id="user-name" class="user-name" style="max-width:110px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"></span>
-    <button class="btn-logout-mini" id="btn-logout" title="ออกจากระบบ" onclick="AuthManager.signOut()"><svg class="svg-ic" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></button>
+  <div class="topnav-actions">
+    <div id="user-profile-badge" class="user-badge" style="display:none;">
+      <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
+      <span id="user-name" class="user-name" style="max-width:110px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"></span>
+      <button class="btn-logout-mini" id="btn-logout" title="ออกจากระบบ" onclick="AuthManager.signOut()"><svg class="svg-ic" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></button>
+    </div>
+    <div id="cloud-sync-status" class="sync-indicator offline" title="สถานะ Cloud Real-time (คลิกเพื่อตั้งค่า)">
+      <span class="sync-dot"></span>
+      <span class="sync-text"><svg class="svg-ic" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16M21 21v-5h-5"/></svg> Local</span>
+    </div>
+    <button class="btn-icon btn-ghost" id="btn-export-quick" title="ตั้งค่า & ส่งออก" aria-label="ตั้งค่า"><svg class="svg-ic" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></button>
+    <button class="btn-icon" id="btn-theme" title="สลับธีม" aria-label="สลับธีม"><svg class="svg-ic" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button>
   </div>
-  <div id="cloud-sync-status" class="sync-indicator offline" title="สถานะ Cloud Real-time (คลิกเพื่อตั้งค่า)">
-    <span class="sync-dot"></span>
-    <span class="sync-text"><svg class="svg-ic" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16M21 21v-5h-5"/></svg> Local</span>
-  </div>
-  <button class="btn-icon btn-ghost" id="btn-export-quick" title="ตั้งค่า & ส่งออก" aria-label="ตั้งค่า"><svg class="svg-ic" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></button>
-  <button class="btn-icon" id="btn-theme" title="สลับธีม" aria-label="สลับธีม"><svg class="svg-ic" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button>
 </nav>
 
 <!-- MAIN CONTENT -->
